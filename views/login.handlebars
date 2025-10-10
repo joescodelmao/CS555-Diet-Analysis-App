@@ -1,0 +1,25 @@
+<main>
+    <div class="centered-flex-column">
+        <h1>Login</h1>
+        <p id="error" {{hidden}}>{{error_message}}</p>
+        <form method="POST" action="/login" id="loginForm" name="loginForm">
+            <div class="centered-flex-row">
+                <label for="username">Username</label>
+                <input id="username" name="username" type="text" value="{{username}}">
+            </div>
+            <div class="centered-flex-row">
+                <label for="password">Password</label>
+                <input id="password" name="password" type="password" value="{{password}}">
+            </div>
+            <div class="centered-flex-row">
+                <input id="submit" type="submit" value="Login">
+            </div>
+        </form>
+        <div class="centered-flex-row">
+            <p>Don't have an account? <a href="/register">Sign up.</a></p>
+        </div>
+        <div class="centered-flex-row">
+            <a href="/">Home</a>
+        </div>
+    </div>
+</main>

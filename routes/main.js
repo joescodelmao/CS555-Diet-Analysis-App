@@ -1,8 +1,8 @@
 import { Router } from "express";
 const router = Router();
 
-import { checkUsername, checkPassword } from "../helpers.js";
-import { register } from "../data/users.js";
+import { checkUsername, checkPassword, checkString } from "../helpers.js";
+import { register, login } from "../data/users.js";
 
 router.route("/").get(async (req, res) => {
   res.render("home", {
@@ -39,5 +39,39 @@ router
       });
     }
   });
+router 
+  .route("/login")
+  .get(async(req, res) => {
+    res.render("login", {
+      title: "Register",
+      stylesheet: "/public/css/register.css",
+      script: "/public/js/register.js",
+      hidden: "hidden",
+    })
+  })
+  .post(async (req, res) => {
+    let { username, password } = req.body;
 
+    try{
+      username = checkString(username);
+      password = checkString(password);
+
+      let user = await login(username, password);
+
+      return res.redirect("/home"); //change to app home page once made
+
+    } catch (e) {
+      
+      return res.status(400).render('login', {
+        title: "Login",
+        stylesheet: "/public/css/login.css",
+        script: "/public/js/login.js",
+        error_message: e,
+        username: username,
+        password: password
+
+    });
+
+    }
+  })
 export default router;
