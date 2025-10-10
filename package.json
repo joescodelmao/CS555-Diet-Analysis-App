@@ -1,0 +1,28 @@
+{
+  "name": "cs555-diet-analysis-app",
+  "version": "1.0.0",
+  "description": "CS555 Diet Analysis App",
+  "main": "app.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joescodelmao/CS555-Diet-Analysis-App.git"
+  },
+  "author": "Owen Treanor, Jimmy Colgan, Sabrina Trestin, Kyle Michael Pingue, Hadeer Motair, Joseph Gargiulo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/joescodelmao/CS555-Diet-Analysis-App/issues"
+  },
+  "homepage": "https://github.com/joescodelmao/CS555-Diet-Analysis-App#readme",
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "express": "^5.1.0",
+    "express-handlebars": "^8.0.1",
+    "express-session": "^1.18.2",
+    "mongodb": "^6.20.0"
+  }
+}

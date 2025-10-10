@@ -1,0 +1,29 @@
+<main>
+  <div>
+    <h1>Register</h1>
+    <p id="error" {{hidden}}>{{error_message}}</p>
+    <form
+      id="registrationForm"
+      action="/register"
+      name="registrationForm"
+      method="POST"
+    >
+      <div>
+        <label for="username">Username</label>
+        <input id="username" name="username" type="text" value="{{username}}" />
+      </div>
+      <div>
+        <label for="password">Password</label>
+        <input
+          id="password"
+          name="password"
+          type="password"
+          value="{{password}}"
+        />
+      </div>
+      <input id="submit" type="submit" value="Register" />
+    </form>
+    <a href="/login">Login</a>
+    <a href="/">Home</a>
+  </div>
+</main>
