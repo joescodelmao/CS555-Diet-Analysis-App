@@ -1,8 +1,9 @@
 import express from "express";
-const app = express();
 import session from "express-session";
 import exphbs from "express-handlebars";
 import configRoutes from "./routes/index.js";
+
+const app = express();
 
 app.use(
   session({

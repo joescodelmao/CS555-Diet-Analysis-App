@@ -1,0 +1,22 @@
+<h1>Edit Your Profile</h1>
+
+<form action="/profile/edit" method="POST">
+  <label>Name:</label>
+  <input type="text" name="name" value="{{profile.name}}" required><br>
+
+  <label>Age:</label>
+  <input type="number" name="age" value="{{profile.age}}" required><br>
+
+  <label>Height (cm):</label>
+  <input type="number" name="height" value="{{profile.height}}" required><br>
+
+  <label>Weight (kg):</label>
+  <input type="number" name="weight" value="{{profile.weight}}" required><br>
+
+  <label>Goal:</label>
+  <input type="text" name="goal" value="{{profile.goal}}" required><br>
+
+  <button type="submit">Save Profile</button>
+</form>
+
+<a href="/profile">Back to Profile</a>

@@ -1,0 +1,11 @@
+<h1>Your Profile</h1>
+{{#if profile}}
+  <p><strong>Name:</strong> {{profile.name}}</p>
+  <p><strong>Age:</strong> {{profile.age}}</p>
+  <p><strong>Height:</strong> {{profile.height}} cm</p>
+  <p><strong>Weight:</strong> {{profile.weight}} kg</p>
+  <p><strong>Goal:</strong> {{profile.goal}}</p>
+  <a href="/profile/edit">Edit Profile</a>
+{{else}}
+  <p>No profile yet. <a href="/profile/edit">Create one</a></p>
+{{/if}}
