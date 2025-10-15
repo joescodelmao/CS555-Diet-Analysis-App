@@ -1,0 +1,109 @@
+/* =========================================================
+   Register Page Styles
+   ========================================================= */
+
+main {
+    font-family: 'Inter', Arial, sans-serif;
+    background-color: #F7F9F7;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+}
+
+/* Container card */
+main > div {
+    background-color: #FFFFFF;
+    padding: 40px 35px;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    max-width: 450px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Title */
+main h1 {
+    color: #2E7D32;
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+/* Error message */
+#error {
+    color: #D32F2F;
+    font-size: 14px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+/* ----------------- Form ----------------- */
+form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    margin-bottom: 20px;
+}
+
+/* Labels and inputs */
+form label {
+    font-weight: 500;
+    font-size: 14px;
+    color: #555;
+    display: block;
+    margin-bottom: 6px;
+}
+
+form input[type="text"],
+form input[type="password"] {
+    width: 90%;
+    padding: 12px 15px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    outline: none;
+    transition: border 0.3s, box-shadow 0.3s;
+}
+
+form input[type="text"]:focus,
+form input[type="password"]:focus {
+    border-color: #4CAF50;
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.3);
+}
+
+/* ----------------- Submit Button ----------------- */
+form input[type="submit"] {
+    width: 100%;
+    padding: 14px;
+    background-color: #4CAF50;
+    color: #FFFFFF;
+    font-size: 16px;
+    font-weight: 500;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.3s, background 0.3s;
+}
+
+form input[type="submit"]:hover {
+    background-color: #43A047;
+    transform: scale(1.03);
+}
+
+/* ----------------- Links ----------------- */
+main a {
+    color: #4CAF50;
+    text-decoration: none;
+    font-weight: 500;
+    margin-top: 5px;
+    transition: color 0.3s, text-decoration 0.3s;
+}
+
+main a:hover {
+    color: #43A047;
+    text-decoration: underline;
+}
