@@ -1,0 +1,117 @@
+/* Body styling */
+body {
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(to right, #E8F5E9, #F0F4F8);
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
+/* Center the main content vertically and horizontally */
+.centered-flex-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    gap: 20px;
+    padding: 20px;
+    text-align: center;
+}
+
+/* Headings */
+.centered-flex-column h1 {
+    font-size: 36px;
+    color: #2d147f;
+    margin-bottom: 10px;
+}
+
+/* Error message styling */
+#error {
+    color: #D32F2F; /* Red for errors */
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+/* Forms */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+    max-width: 400px;
+    background-color: #FFFFFF;
+    padding: 30px 25px;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+/* Row styling */
+.centered-flex-row {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    gap: 5px;
+}
+
+/* Labels */
+.centered-flex-row label {
+    font-weight: 500;
+    font-size: 14px;
+    color: #555;
+}
+
+/* Inputs */
+.centered-flex-row input[type="text"],
+.centered-flex-row input[type="password"] {
+    width: 90%;
+    padding: 12px 15px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    outline: none;
+    transition: border 0.3s;
+}
+
+.centered-flex-row input[type="text"]:focus,
+.centered-flex-row input[type="password"]:focus {
+    border-color: #4CAF50;
+}
+
+/* Submit button */
+.centered-flex-row input[type="submit"] {
+    width: 100%;
+    padding: 15px;
+    background-color: #4CAF50;
+    color: #FFFFFF;
+    font-size: 16px;
+    font-weight: 500;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.3s, background 0.3s;
+}
+
+.centered-flex-row input[type="submit"]:hover {
+    background-color: #43A047;
+    transform: scale(1.05);
+}
+
+/* Footer links */
+.centered-flex-column a {
+    color: #4CAF50;
+    text-decoration: none;
+    font-weight: 500;
+    transition: text-decoration 0.3s;
+}
+
+.centered-flex-column a:hover {
+    text-decoration: underline;
+}
+
+/* Additional paragraph styling */
+.centered-flex-column p {
+    font-size: 14px;
+    color: #555;
+}
