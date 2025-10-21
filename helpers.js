@@ -57,3 +57,13 @@ export const checkPassword = (password) => {
   }
   return password;
 };
+
+export const checkForNoRestrictions = (dietaryRestrictions) => {
+  let noRestrictions = true;
+  for (let o in dietaryRestrictions) {
+    if (dietaryRestrictions[o]) {
+      noRestrictions = false;
+    }
+  }
+  return noRestrictions
+}

@@ -21,6 +21,7 @@ export const createOrUpdateProfile = async (userId, data) => {
     height: parseFloat(data.height) || null,
     weight: parseFloat(data.weight) || null,
     goal: checkString(data.goal || "", "Goal"),
+    dietaryRestrictions: data.dietaryRestrictions
   };
 
   if (existing) {

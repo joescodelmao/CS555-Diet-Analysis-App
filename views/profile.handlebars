@@ -5,6 +5,68 @@
   <p><strong>Height:</strong> {{profile.height}} cm</p>
   <p><strong>Weight:</strong> {{profile.weight}} kg</p>
   <p><strong>Goal:</strong> {{profile.goal}}</p>
+  {{#if noRestrictions}}
+  <p><strong>No Dietary Restrictions</strong></p>
+  {{/if}}
+  {{#if profile.dietaryRestrictions.vegan}}
+    <p><strong>Vegan</strong></p>
+  {{/if}}
+
+  {{#if profile.dietaryRestrictions.vegetarian}}
+    <p><strong>Vegetarian</strong></p>
+  {{/if}}
+
+  {{#if profile.dietaryRestrictions.pescatarian}}
+    <p><strong>Pescatarian</strong></p>
+  {{/if}}
+
+  {{#if profile.dietaryRestrictions.gluten_free}}
+    <p><strong>Gluten-free</strong></p>
+  {{/if}}
+
+  {{#if profile.dietaryRestrictions.dairy_free}}
+    <p><strong>Dairy-free</strong></p>
+  {{/if}}
+
+  {{#if profile.dietaryRestrictions.nut_free}}
+    <p><strong>Nut-free</strong></p>
+  {{/if}}
+
+  {{#if profile.dietaryRestrictions.peanut_free}}
+    <p><strong>Peanut-free</strong></p>
+  {{/if}}
+
+  {{#if profile.dietaryRestrictions.soy_free}}
+    <p><strong>Soy-free</strong></p>
+  {{/if}}
+
+  {{#if profile.dietaryRestrictions.egg_free}}
+    <p><strong>Egg-free</strong></p>
+  {{/if}}
+
+  {{#if profile.dietaryRestrictions.shellfish_free}}
+    <p><strong>Shellfish-free</strong></p>
+  {{/if}}
+
+  {{#if profile.dietaryRestrictions.halal}}
+    <p><strong>Halal</strong></p>
+  {{/if}}
+
+  {{#if profile.dietaryRestrictions.kosher}}
+    <p><strong>Kosher</strong></p>
+  {{/if}}
+
+  {{#if profile.dietaryRestrictions.low_carb}}
+    <p><strong>Low-carb</strong></p>
+  {{/if}}
+
+  {{#if profile.dietaryRestrictions.low_sodium}}
+    <p><strong>Low-sodium</strong></p>
+  {{/if}}
+
+  {{#if profile.dietaryRestrictions.low_sugar}}
+    <p><strong>Low-sugar</strong></p>
+  {{/if}}
   <a href="/profile/edit">Edit Profile</a>
 {{else}}
   <p>No profile yet. <a href="/profile/edit">Create one</a></p>
