@@ -38,6 +38,7 @@ Before running this application, make sure you have the following installed:
 2. **Install dependencies**
    ```bash
    npm install
+   npm install multer path fs
    ```
 
 3. **Start MongoDB**
