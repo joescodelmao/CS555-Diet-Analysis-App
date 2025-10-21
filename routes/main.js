@@ -8,7 +8,7 @@ router.route("/").get(async (req, res) => {
   res.render("home", {
     title: "Home Page",
     stylesheet: "/public/css/home.css",
-    user: req.session.user
+    user: req.session.user,
   });
 });
 
@@ -36,14 +36,14 @@ router
         script: "/public/js/register.js",
         error_message: e,
         username: username,
-        password: password
+        password: password,
       });
     }
   });
 
 router
   .route("/login")
-  .get(async(req, res) => {
+  .get(async (req, res) => {
     res.render("login", {
       title: "Login",
       stylesheet: "/public/css/login.css",
@@ -62,19 +62,18 @@ router
 
       req.session.user = {
         _id: user._id,
-        username: user.username
+        username: user.username,
       };
 
       return res.redirect("/home");
-
     } catch (e) {
-      return res.status(400).render('login', {
+      return res.status(400).render("login", {
         title: "Login",
         stylesheet: "/public/css/login.css",
         script: "/public/js/login.js",
         error_message: e,
         username: username,
-        password: password
+        password: password,
       });
     }
   });
@@ -87,7 +86,10 @@ router.get("/logout", async (req, res) => {
         return res.status(500).send("Logout failed");
       }
       res.clearCookie("AuthenticationState");
-      return res.redirect("/login");
+      res.render("logout", {
+        title: "Logged Out",
+        stylesheet: "/public/css/home.css",
+      });
     });
   } else {
     return res.redirect("/login");
