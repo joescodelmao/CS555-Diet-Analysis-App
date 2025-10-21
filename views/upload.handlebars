@@ -1,30 +1,30 @@
 <h1>Upload or Take a Photo of Your Meal</h1>
 
-<!-- Buttons to choose mode -->
 <div style="margin-bottom: 15px;">
   <button type="button" id="openCameraBtn">📸 Use Camera</button>
   <button type="button" id="chooseFileBtn">📁 Upload Photo</button>
 </div>
 
-<!-- Camera section (hidden until user clicks "Use Camera") -->
+<!-- Camera section -->
 <div id="cameraContainer" style="display:none; text-align:center;">
   <video id="video" width="300" height="225" autoplay playsinline></video><br>
-  <button id="captureBtn">📷 Take Photo</button>
+  <button type="button" id="captureBtn">📷 Take Photo</button>
   <canvas id="canvas" width="300" height="225" style="display:none;"></canvas>
 </div>
 
 <!-- Upload form -->
 <form id="uploadForm" action="/upload" method="POST" enctype="multipart/form-data" style="margin-top:15px;">
-  <input type="file" name="mealImage" id="mealImage" accept="image/*" capture="environment" style="display:none;" required>
+  <input type="file" name="mealImage" id="mealImage" accept="image/*" capture="environment" style="display:none;">
   <input type="hidden" name="capturedImage" id="capturedImage">
+
+  <div id="previewContainer" style="display:none; text-align:center; margin-top: 10px;">
+    <h3>Preview:</h3>
+    <img id="previewImage" src="#" alt="Meal preview" style="max-width:300px; border-radius:10px;">
+  </div>
+
+  <br>
   <button type="submit" id="submitBtn" style="display:none;">Upload</button>
 </form>
-
-<!-- Preview section -->
-<div id="previewContainer" style="display:none; text-align:center;">
-  <h3>Preview:</h3>
-  <img id="previewImage" src="#" alt="Meal preview" style="max-width:300px; border-radius:10px;">
-</div>
 
 <script>
   const openCameraBtn = document.getElementById("openCameraBtn");
@@ -38,6 +38,7 @@
   const previewImage = document.getElementById("previewImage");
   const submitBtn = document.getElementById("submitBtn");
   const capturedImage = document.getElementById("capturedImage");
+  const uploadForm = document.getElementById("uploadForm");
 
   // Open camera
   openCameraBtn.addEventListener("click", async () => {
@@ -51,21 +52,23 @@
     }
   });
 
-  // Capture photo from video
+  // Capture photo from camera
   captureBtn.addEventListener("click", () => {
-    canvas.getContext("2d").drawImage(video, 0, 0, canvas.width, canvas.height);
+    const context = canvas.getContext("2d");
+    context.drawImage(video, 0, 0, canvas.width, canvas.height);
     const imageData = canvas.toDataURL("image/png");
     previewImage.src = imageData;
     previewContainer.style.display = "block";
-    submitBtn.style.display = "block";
+    submitBtn.style.display = "inline-block";
     capturedImage.value = imageData;
   });
 
-  // Handle file uploads manually
+  // Choose file manually
   chooseFileBtn.addEventListener("click", () => {
     mealImage.click();
   });
 
+  // File upload preview
   mealImage.addEventListener("change", (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -73,9 +76,17 @@
       reader.onload = (e) => {
         previewImage.src = e.target.result;
         previewContainer.style.display = "block";
-        submitBtn.style.display = "block";
+        submitBtn.style.display = "inline-block";
       };
       reader.readAsDataURL(file);
+    }
+  });
+
+  // Ensure captured image submits properly
+  uploadForm.addEventListener("submit", (e) => {
+    if (!capturedImage.value && !mealImage.files.length) {
+      e.preventDefault();
+      alert("Please take or upload a photo first!");
     }
   });
 </script>
