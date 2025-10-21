@@ -24,10 +24,23 @@ router
     res.render("upload", {
       title: "Upload Meal Photo",
       stylesheet: "/public/css/upload.css",
-      script: "/public/js/upload.js",
     });
   })
   .post(upload.single("mealImage"), async (req, res) => {
+    // Handle base64 image (from camera capture)
+    if (req.body.capturedImage) {
+      const base64Data = req.body.capturedImage.replace(/^data:image\/png;base64,/, "");
+      const filename = `${Date.now()}.png`;
+      const uploadPath = path.join("./public/uploads", filename);
+      fs.writeFileSync(uploadPath, base64Data, "base64");
+      return res.render("upload_success", {
+        title: "Upload Success",
+        imagePath: `/uploads/${filename}`,
+        message: "Meal photo captured successfully!",
+      });
+    }
+
+    // Handle file upload
     if (!req.file) {
       return res.status(400).render("upload", {
         title: "Upload Meal Photo",
