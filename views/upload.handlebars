@@ -1,0 +1,6 @@
+<h1>Upload or Take a Photo of Your Meal</h1>
+<form action="/upload" method="POST" enctype="multipart/form-data">
+  <label for="mealImage">Choose or take a photo:</label><br>
+  <input type="file" name="mealImage" accept="image/*" capture="environment" required><br><br>
+  <button type="submit">Upload</button>
+</form>

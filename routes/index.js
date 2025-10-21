@@ -1,10 +1,14 @@
 import routes from "./main.js";
-import profileRoutes from "./profile.js"; 
+import profileRoutes from "./profile.js";
+import uploadRoutes from "./upload.js";
+
 
 const constructorMethod = (app) => {
   app.use("/", routes);
 
   app.use("/profile", profileRoutes);
+  
+  app.use("/upload", uploadRoutes);
 
   app.get("/home", (req, res) => {
     return res.render("home", {
