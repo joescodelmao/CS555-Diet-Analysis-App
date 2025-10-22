@@ -18,7 +18,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/public", express.static("public"));
 
-app.engine("handlebars", exphbs.engine({ defaultLayout: "main" }));
+app.engine("handlebars", exphbs.engine({ defaultLayout: "main", helpers: {
+      multiply: (a, b) => (a * b).toFixed(2),
+    },}));
 app.set("view engine", "handlebars");
 
 configRoutes(app);

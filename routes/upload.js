@@ -3,7 +3,20 @@ import multer from "multer";
 import path from "path";
 import fs from "fs";
 
+//image classification stuff
+import * as tf from '@tensorflow/tfjs';
+import * as mobilenet from '@tensorflow-models/mobilenet';
+import { createCanvas, loadImage } from "canvas";
+
 const router = Router();
+
+//mobilenet model
+let model;
+
+(async () => {
+  model = await mobilenet.load();
+  console.log("mobilenet model loaded.");
+})();
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -48,11 +61,26 @@ router
       });
     }
 
+    //load image into model
+    try {
+      const imagePath = `./public/uploads/${req.file.filename}`;
+      const image = await loadImage(imagePath);
+      const canvas = createCanvas(image.width, image.height);
+      const ctx = canvas.getContext("2d");
+      ctx.drawImage(image, 0, 0, image.width, image.height);
+      const predictions = await model.classify(canvas);
+
     res.render("upload_success", {
       title: "Upload Success",
       imagePath: `/uploads/${req.file.filename}`,
       message: "Meal photo uploaded successfully!",
+      predictions,
     });
+  } 
+  catch (err) {
+    console.error("💥 TensorFlow error:", err);
+    res.status(500).send("Error processing image.");
+  }
   });
 
 export default router;
