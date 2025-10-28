@@ -11,10 +11,14 @@
         <a href="/">Home</a>
         {{#if user}}
             | <a href="/profile">My Profile</a>
-            | <a href="/logout">Logout</a>
             | <a href="/upload">Upload Meal</a>
+            | <a href="/logout">Logout</a>
         {{else}}
+        {{#if registerpage}}
             | <a href="/login">Login</a>
+        {{else}}
+            | <a href="/register">Register</a>
+        {{/if}}
         {{/if}}
     </nav>
     <hr>
