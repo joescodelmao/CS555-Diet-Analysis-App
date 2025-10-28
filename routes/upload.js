@@ -1,77 +1,124 @@
-import { Router } from "express";
+// routes/upload.js
+import express from "express";
 import multer from "multer";
-import path from "path";
-import fs from "fs";
+import foodsData from "../data/foods.js";
 
-const router = Router();
+const router = express.Router();
 
+// Configure multer for file uploads
 const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-      const uploadDir = "./public/uploads";
-      if (!fs.existsSync(uploadDir)) fs.mkdirSync(uploadDir);
-      cb(null, uploadDir);
-    },
-    filename: function (req, file, cb) {
-      cb(null, Date.now() + path.extname(file.originalname));
-    },
-  });
+  destination: function (req, file, cb) {
+    cb(null, 'public/uploads/')
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + '-' + file.originalname)
+  }
+});
 
-const upload = multer({ storage });
+const upload = multer({ 
+  storage: storage,
+  limits: {
+    fileSize: 5 * 1024 * 1024 // 5MB limit
+  },
+  fileFilter: function (req, file, cb) {
+    // Accept only image files
+    if (file.mimetype.startsWith('image/')) {
+      cb(null, true);
+    } else {
+      cb(new Error('Only image files are allowed'), false);
+    }
+  }
+});
 
-router
-  .route("/")
-  .get(async (req, res) => {
-    res.render("upload", {
-      title: "Upload Meal Photo",
-      stylesheet: "/public/css/upload.css",
-    });
-  })
-  .post(upload.single("mealImage"), async (req, res) => {
-    // Handle base64 image (from camera capture)
-    if (req.body.capturedImage) {
-      const base64Data = req.body.capturedImage.replace(/^data:image\/png;base64,/, "");
-      const filename = `${Date.now()}.png`;
-      const uploadPath = path.join("./public/uploads", filename);
-      fs.writeFileSync(uploadPath, base64Data, "base64");
-      return res.render("upload_success", {
-        title: "Upload Success",
-        imagePath: `/uploads/${filename}`,
-        message: "Meal photo captured successfully!",
+// Require login for all upload routes
+router.use((req, res, next) => {
+  if (!req.session.user) {
+    return res.status(401).json({ error: "Authentication required" });
+  }
+  next();
+});
+
+/**
+ * POST /upload/food
+ * Upload food image and add to database
+ */
+router.post("/food", upload.single('foodImage'), async (req, res) => {
+  try {
+    const { name, brand, category, servingSize, servingUnit, calories, protein, carbohydrates, fat } = req.body;
+    
+    // Validate required fields
+    if (!name || !servingSize || !calories || !protein || !carbohydrates || !fat) {
+      return res.status(400).json({ 
+        error: "Missing required fields: name, servingSize, calories, protein, carbohydrates, fat" 
       });
     }
-
-    // Handle file upload
-    if (!req.file) {
-      return res.status(400).render("upload", {
-        title: "Upload Meal Photo",
-        error_message: "Please upload or capture an image.",
-      });
+    
+    // Create food data
+    const foodData = {
+      name: name.trim(),
+      brand: brand ? brand.trim() : null,
+      category: category ? category.trim() : "Other",
+      servingSize: parseFloat(servingSize),
+      servingUnit: servingUnit ? servingUnit.trim() : "serving",
+      nutrients: {
+        calories: parseFloat(calories),
+        protein: parseFloat(protein),
+        carbohydrates: parseFloat(carbohydrates),
+        fat: parseFloat(fat),
+        fiber: parseFloat(req.body.fiber) || 0,
+        sugar: parseFloat(req.body.sugar) || 0,
+        sodium: parseFloat(req.body.sodium) || 0,
+        saturatedFat: parseFloat(req.body.saturatedFat) || 0,
+        transFat: parseFloat(req.body.transFat) || 0,
+        cholesterol: parseFloat(req.body.cholesterol) || 0,
+        potassium: parseFloat(req.body.potassium) || 0,
+        calcium: parseFloat(req.body.calcium) || 0,
+        iron: parseFloat(req.body.iron) || 0,
+        vitaminA: parseFloat(req.body.vitaminA) || 0,
+        vitaminC: parseFloat(req.body.vitaminC) || 0
+      }
+    };
+    
+    // Add image path if uploaded
+    if (req.file) {
+      foodData.imagePath = `/uploads/${req.file.filename}`;
     }
-
-    res.render("upload_success", {
-      title: "Upload Success",
-      imagePath: `/uploads/${req.file.filename}`,
-      message: "Meal photo uploaded successfully!",
+    
+    // Add to database
+    const newFood = await foodsData.addFood(foodData);
+    
+    res.json({
+      success: true,
+      food: newFood,
+      message: "Food added successfully!"
     });
+    
+  } catch (error) {
+    console.error("Food upload error:", error);
+    res.status(500).json({ 
+      error: error.message || "Failed to add food" 
+    });
+  }
+});
+
+/**
+ * GET /upload
+ * Redirect to food upload form
+ */
+router.get("/", (req, res) => {
+  res.redirect("/upload/food");
+});
+
+/**
+ * GET /upload/food
+ * Show food upload form
+ */
+router.get("/food", (req, res) => {
+  res.render("food_upload", {
+    title: "Add Food",
+    stylesheet: "/public/css/food_upload.css",
+    user: req.session.user
   });
+});
 
 export default router;
-
-//const NodeWebcam = require("node_webcam");
-
-//const opts = {
-//    width: 1280,
-//    height: 720,
-//    delay: 0,
-//    quality: 100,
-//    output: "jpeg,jpg,png",
-//    callbackReturn: "location"
-//};
-
-//const Webcam = NodeWebcam.create(opts);
-
-//Webcam.capture("my_picture", function(err,data){
-//    if (!err){
-//        console.log("Accpeted image");
-//    }
-//});

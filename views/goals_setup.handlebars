@@ -1,0 +1,260 @@
+<!-- views/goals_setup.handlebars -->
+<div class="goals-setup-container">
+  <div class="setup-header">
+    <h1>🎯 Set Your Nutritional Goals</h1>
+    <p>Let's calculate your personalized daily nutrition targets</p>
+  </div>
+
+  <form id="goals-setup-form">
+    <div class="form-section">
+      <h3>Personal Information</h3>
+      
+      <div class="form-row">
+        <div class="form-group">
+          <label for="weight">Weight (kg) *</label>
+          <input type="number" id="weight" name="weight" step="0.1" min="30" max="300" required placeholder="70">
+        </div>
+        
+        <div class="form-group">
+          <label for="height">Height (cm) *</label>
+          <input type="number" id="height" name="height" step="0.1" min="100" max="250" required placeholder="175">
+        </div>
+      </div>
+      
+      <div class="form-row">
+        <div class="form-group">
+          <label for="age">Age (years) *</label>
+          <input type="number" id="age" name="age" min="13" max="120" required placeholder="25">
+        </div>
+        
+        <div class="form-group">
+          <label for="gender">Gender *</label>
+          <select id="gender" name="gender" required>
+            <option value="">Select Gender</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h3>Activity Level</h3>
+      
+      <div class="form-group">
+        <label for="activityLevel">How active are you? *</label>
+        <select id="activityLevel" name="activityLevel" required>
+          <option value="">Select Activity Level</option>
+          <option value="sedentary">Sedentary (little/no exercise)</option>
+          <option value="lightly_active">Lightly Active (light exercise 1-3 days/week)</option>
+          <option value="moderately_active">Moderately Active (moderate exercise 3-5 days/week)</option>
+          <option value="very_active">Very Active (hard exercise 6-7 days/week)</option>
+          <option value="extremely_active">Extremely Active (very hard exercise, physical job)</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h3>Goal Type</h3>
+      
+      <div class="form-group">
+        <label for="goalType">What's your main goal? *</label>
+        <select id="goalType" name="goalType" required>
+          <option value="">Select Goal</option>
+          <option value="maintenance">Maintain Current Weight</option>
+          <option value="weight_loss">Lose Weight</option>
+          <option value="weight_gain">Gain Weight</option>
+          <option value="muscle_gain">Build Muscle</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary">Calculate My Goals</button>
+    </div>
+  </form>
+
+  <div id="goals-result" class="goals-result"></div>
+</div>
+
+<script>
+document.getElementById('goals-setup-form').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  
+  const formData = new FormData(this);
+  const data = Object.fromEntries(formData);
+  const resultDiv = document.getElementById('goals-result');
+  
+  try {
+    resultDiv.innerHTML = '<div class="loading">🔄 Calculating your personalized goals...</div>';
+    
+    const response = await fetch('/api/nutritional/goals/setup', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    });
+    
+    const result = await response.json();
+    
+    if (response.ok) {
+      resultDiv.innerHTML = `
+        <div class="success">
+          <h3>🎉 Your Goals Are Set!</h3>
+          <div class="goals-summary">
+            <div class="goal-item">
+              <span class="label">Daily Calories:</span>
+              <span class="value">${result.goals.calories}</span>
+            </div>
+            <div class="goal-item">
+              <span class="label">Protein:</span>
+              <span class="value">${result.goals.macronutrients.protein}g</span>
+            </div>
+            <div class="goal-item">
+              <span class="label">Carbohydrates:</span>
+              <span class="value">${result.goals.macronutrients.carbohydrates}g</span>
+            </div>
+            <div class="goal-item">
+              <span class="label">Fat:</span>
+              <span class="value">${result.goals.macronutrients.fat}g</span>
+            </div>
+          </div>
+          <div class="calculations-info">
+            <h4>📊 Your Calculations:</h4>
+            <p><strong>BMR:</strong> ${result.calculations.bmr} calories/day</p>
+            <p><strong>TDEE:</strong> ${result.calculations.tdee} calories/day</p>
+            <p><strong>Goal:</strong> ${result.goals.goalType.replace('_', ' ')}</p>
+          </div>
+          <div class="action-buttons">
+            <a href="/nutritional" class="btn btn-primary">Go to Dashboard</a>
+            <a href="/upload" class="btn btn-secondary">Add Foods</a>
+          </div>
+        </div>
+      `;
+    } else {
+      resultDiv.innerHTML = `
+        <div class="error">
+          <h4>❌ Error</h4>
+          <p>${result.error}</p>
+        </div>
+      `;
+    }
+  } catch (error) {
+    resultDiv.innerHTML = `
+      <div class="error">
+        <h4>❌ Setup Failed</h4>
+        <p>${error.message}</p>
+      </div>
+    `;
+  }
+});
+</script>
+
+<style>
+.goals-setup-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.setup-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.setup-header h1 {
+  color: #2c3e50;
+  margin-bottom: 10px;
+}
+
+.form-section {
+  background: white;
+  border-radius: 12px;
+  padding: 25px;
+  margin-bottom: 25px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #bdc3c7;
+  border-radius: 6px;
+  font-size: 16px;
+}
+
+.btn {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.btn-primary {
+  background: #3498db;
+  color: white;
+}
+
+.btn-secondary {
+  background: #95a5a6;
+  color: white;
+}
+
+.goals-result {
+  margin-top: 30px;
+}
+
+.success {
+  background: #d5f4e6;
+  border: 2px solid #27ae60;
+  color: #27ae60;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.goals-summary {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  margin: 20px 0;
+}
+
+.goal-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  background: rgba(39, 174, 96, 0.1);
+  border-radius: 6px;
+}
+
+.action-buttons {
+  margin-top: 20px;
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+}
+</style>

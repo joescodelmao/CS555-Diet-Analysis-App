@@ -1,0 +1,188 @@
+<!-- views/food_upload.handlebars -->
+<div class="food-upload-container">
+  <div class="upload-header">
+    <h1>Add New Food</h1>
+    <p>Upload a food image and enter its nutritional information</p>
+  </div>
+
+  <form id="food-upload-form" enctype="multipart/form-data">
+    <div class="form-section">
+      <h3>Basic Information</h3>
+      
+      <div class="form-group">
+        <label for="food-name">Food Name *</label>
+        <input type="text" id="food-name" name="name" required placeholder="e.g., Grilled Chicken Breast">
+      </div>
+      
+      <div class="form-group">
+        <label for="food-brand">Brand (Optional)</label>
+        <input type="text" id="food-brand" name="brand" placeholder="e.g., Tyson, Generic">
+      </div>
+      
+      <div class="form-group">
+        <label for="food-category">Category</label>
+        <select id="food-category" name="category">
+          <option value="Meat">Meat</option>
+          <option value="Poultry">Poultry</option>
+          <option value="Fish">Fish</option>
+          <option value="Dairy">Dairy</option>
+          <option value="Vegetables">Vegetables</option>
+          <option value="Fruits">Fruits</option>
+          <option value="Grains">Grains</option>
+          <option value="Nuts">Nuts</option>
+          <option value="Beverages">Beverages</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h3>Serving Information</h3>
+      
+      <div class="form-row">
+        <div class="form-group">
+          <label for="serving-size">Serving Size *</label>
+          <input type="number" id="serving-size" name="servingSize" step="0.1" min="0.1" required placeholder="100">
+        </div>
+        
+        <div class="form-group">
+          <label for="serving-unit">Unit *</label>
+          <select id="serving-unit" name="servingUnit">
+            <option value="g">Grams (g)</option>
+            <option value="oz">Ounces (oz)</option>
+            <option value="cup">Cup</option>
+            <option value="tbsp">Tablespoon</option>
+            <option value="tsp">Teaspoon</option>
+            <option value="piece">Piece</option>
+            <option value="slice">Slice</option>
+            <option value="serving">Serving</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h3>Macronutrients (per serving)</h3>
+      
+      <div class="form-row">
+        <div class="form-group">
+          <label for="calories">Calories *</label>
+          <input type="number" id="calories" name="calories" step="0.1" min="0" required placeholder="250">
+        </div>
+        
+        <div class="form-group">
+          <label for="protein">Protein (g) *</label>
+          <input type="number" id="protein" name="protein" step="0.1" min="0" required placeholder="25">
+        </div>
+      </div>
+      
+      <div class="form-row">
+        <div class="form-group">
+          <label for="carbohydrates">Carbohydrates (g) *</label>
+          <input type="number" id="carbohydrates" name="carbohydrates" step="0.1" min="0" required placeholder="15">
+        </div>
+        
+        <div class="form-group">
+          <label for="fat">Fat (g) *</label>
+          <input type="number" id="fat" name="fat" step="0.1" min="0" required placeholder="10">
+        </div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h3>Additional Nutrients (Optional)</h3>
+      
+      <div class="form-row">
+        <div class="form-group">
+          <label for="fiber">Fiber (g)</label>
+          <input type="number" id="fiber" name="fiber" step="0.1" min="0" placeholder="3">
+        </div>
+        
+        <div class="form-group">
+          <label for="sugar">Sugar (g)</label>
+          <input type="number" id="sugar" name="sugar" step="0.1" min="0" placeholder="5">
+        </div>
+      </div>
+      
+      <div class="form-row">
+        <div class="form-group">
+          <label for="sodium">Sodium (mg)</label>
+          <input type="number" id="sodium" name="sodium" step="0.1" min="0" placeholder="400">
+        </div>
+        
+        <div class="form-group">
+          <label for="saturated-fat">Saturated Fat (g)</label>
+          <input type="number" id="saturated-fat" name="saturatedFat" step="0.1" min="0" placeholder="2">
+        </div>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h3>Food Image (Optional)</h3>
+      
+      <div class="form-group">
+        <label for="food-image">Upload Image</label>
+        <input type="file" id="food-image" name="foodImage" accept="image/*">
+        <small>Maximum file size: 5MB. Supported formats: JPG, PNG, GIF</small>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary">Add Food</button>
+      <button type="button" class="btn btn-secondary" onclick="window.history.back()">Cancel</button>
+    </div>
+  </form>
+
+  <div id="upload-result" class="upload-result"></div>
+</div>
+
+<script>
+document.getElementById('food-upload-form').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  
+  const formData = new FormData(this);
+  const resultDiv = document.getElementById('upload-result');
+  
+  try {
+    resultDiv.innerHTML = '<div class="loading">Adding food...</div>';
+    
+    const response = await fetch('/upload/food', {
+      method: 'POST',
+      body: formData
+    });
+    
+    const result = await response.json();
+    
+    if (response.ok) {
+      resultDiv.innerHTML = `
+        <div class="success">
+          <h4>✅ Food Added Successfully!</h4>
+          <p><strong>${result.food.name}</strong> has been added to the database.</p>
+          <p>Calories: ${result.food.nutrients.calories} | Protein: ${result.food.nutrients.protein}g | Carbs: ${result.food.nutrients.carbohydrates}g | Fat: ${result.food.nutrients.fat}g</p>
+          <div class="action-buttons">
+            <a href="/nutritional" class="btn btn-primary">Go to Dashboard</a>
+            <button onclick="location.reload()" class="btn btn-secondary">Add Another</button>
+          </div>
+        </div>
+      `;
+      
+      // Reset form
+      this.reset();
+    } else {
+      resultDiv.innerHTML = `
+        <div class="error">
+          <h4>❌ Error</h4>
+          <p>${result.error}</p>
+        </div>
+      `;
+    }
+  } catch (error) {
+    resultDiv.innerHTML = `
+      <div class="error">
+        <h4>❌ Upload Failed</h4>
+        <p>${error.message}</p>
+      </div>
+    `;
+  }
+});
+</script>

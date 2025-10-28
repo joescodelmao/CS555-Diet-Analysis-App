@@ -1,0 +1,171 @@
+<!-- views/nutritional.handlebars -->
+<div class="nutritional-dashboard">
+  <div class="dashboard-header">
+    <h1 class="dashboard-title">Nutritional Dashboard</h1>
+    <div class="date-picker">
+      <label for="analysis-date">Date:</label>
+      <input type="date" id="analysis-date" value="{{currentDate}}">
+    </div>
+  </div>
+
+  <!-- Nutritional Summary -->
+  <div id="nutritional-summary">
+    <!-- Summary cards will be populated by JavaScript -->
+  </div>
+
+  <!-- Meal Breakdown -->
+  <div id="meal-breakdown">
+    <!-- Meal cards will be populated by JavaScript -->
+  </div>
+
+  <!-- Progress Bars -->
+  <div id="progress-bars">
+    <!-- Progress bars will be populated by JavaScript -->
+  </div>
+
+  <!-- Recommendations -->
+  <div id="recommendations">
+    <!-- Recommendations will be populated by JavaScript -->
+  </div>
+
+  <!-- Trends -->
+  <div id="trends">
+    <!-- Trends chart will be populated by JavaScript -->
+  </div>
+
+  <!-- Action Buttons -->
+  <div class="dashboard-actions">
+    <button id="add-food-btn" class="btn btn-primary">Add Food</button>
+    <button id="set-goals-btn" class="btn btn-secondary">Set Goals</button>
+  </div>
+</div>
+
+<!-- Food Search Modal -->
+<div id="food-search-modal" class="food-search-modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2 class="modal-title">Add Food to Log</h2>
+      <button class="close-btn" onclick="document.getElementById('food-search-modal').style.display='none'">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="search-controls">
+        <input type="text" id="food-search-input" placeholder="Search for foods...">
+        <button id="food-search-btn">Search</button>
+        <button id="usda-search-btn" class="secondary">Search USDA</button>
+      </div>
+      
+      <div class="food-selection">
+        <div class="selection-controls">
+          <div class="control-group">
+            <label for="meal-type-select">Meal:</label>
+            <select id="meal-type-select">
+              <option value="breakfast">Breakfast</option>
+              <option value="lunch">Lunch</option>
+              <option value="dinner">Dinner</option>
+              <option value="snack">Snack</option>
+            </select>
+          </div>
+          <div class="control-group">
+            <label for="food-quantity">Quantity:</label>
+            <input type="number" id="food-quantity" step="0.1" min="0.1" value="1">
+          </div>
+        </div>
+      </div>
+      
+      <div id="search-results">
+        <!-- Search results will be populated by JavaScript -->
+      </div>
+      
+      <div id="popular-foods">
+        <!-- Popular foods will be populated by JavaScript -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Goals Modal -->
+<div id="goals-modal" class="food-search-modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2 class="modal-title">Set Nutritional Goals</h2>
+      <button class="close-btn" onclick="document.getElementById('goals-modal').style.display='none'">&times;</button>
+    </div>
+    <div class="modal-body">
+      <form id="goals-form">
+        <div class="form-group">
+          <label for="goal-calories">Daily Calories:</label>
+          <input type="number" id="goal-calories" name="calories" min="1000" max="5000" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="goal-protein">Protein (g):</label>
+          <input type="number" id="goal-protein" name="protein" min="0" max="500" step="0.1" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="goal-carbs">Carbohydrates (g):</label>
+          <input type="number" id="goal-carbs" name="carbohydrates" min="0" max="1000" step="0.1" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="goal-fat">Fat (g):</label>
+          <input type="number" id="goal-fat" name="fat" min="0" max="500" step="0.1" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="goal-fiber">Fiber (g):</label>
+          <input type="number" id="goal-fiber" name="fiber" min="0" max="100" step="0.1" value="25">
+        </div>
+        
+        <div class="form-group">
+          <label for="goal-type">Goal Type:</label>
+          <select id="goal-type" name="goalType" required>
+            <option value="maintenance">Maintenance</option>
+            <option value="weight_loss">Weight Loss</option>
+            <option value="weight_gain">Weight Gain</option>
+            <option value="muscle_gain">Muscle Gain</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="target-weight">Target Weight (kg):</label>
+          <input type="number" id="target-weight" name="targetWeight" min="30" max="300" step="0.1">
+        </div>
+        
+        <div class="form-group">
+          <label for="weekly-change">Weekly Weight Change (lbs):</label>
+          <input type="number" id="weekly-change" name="weeklyWeightChange" min="0.1" max="5" step="0.1" value="1">
+        </div>
+        
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary">Save Goals</button>
+          <button type="button" class="btn btn-secondary" onclick="document.getElementById('goals-modal').style.display='none'">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="/public/js/nutritionalDashboard.js"></script>
+<script src="/public/js/foodSearch.js"></script>
+
+<script>
+// Initialize dashboard when page loads
+document.addEventListener('DOMContentLoaded', function() {
+  console.log('🍎 Nutritional Dashboard Loading...');
+  
+  // Set current date
+  const dateInput = document.getElementById('analysis-date');
+  if (dateInput) {
+    dateInput.value = new Date().toISOString().split('T')[0];
+  }
+  
+  // Initialize dashboard
+  if (typeof NutritionalDashboard !== 'undefined') {
+    window.nutritionalDashboard = new NutritionalDashboard();
+  } else {
+    console.error('❌ NutritionalDashboard class not found');
+  }
+});
+</script>

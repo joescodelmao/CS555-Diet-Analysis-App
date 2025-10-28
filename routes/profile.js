@@ -14,14 +14,29 @@ router.use((req, res, next) => {
 
 // View profile
 router.get("/", async (req, res) => {
-  const profile = await getProfileByUserId(req.session.user._id);
-  res.render("profile", {
-    profile,
-    title: "My Profile",
-    stylesheet: "/public/css/profile.css",
-    user: req.session.user,
-    noRestrictions: checkForNoRestrictions(profile.dietaryRestrictions)
-  });
+  try {
+    const profile = await getProfileByUserId(req.session.user._id);
+    const noRestrictions = profile && profile.dietaryRestrictions ? 
+      checkForNoRestrictions(profile.dietaryRestrictions) : true;
+    
+    res.render("profile", {
+      profile,
+      title: "My Profile",
+      stylesheet: "/public/css/profile.css",
+      user: req.session.user,
+      noRestrictions
+    });
+  } catch (error) {
+    console.error("Profile error:", error);
+    res.render("profile", {
+      profile: null,
+      title: "My Profile",
+      stylesheet: "/public/css/profile.css",
+      user: req.session.user,
+      noRestrictions: true,
+      error: "Profile not found. Please create your profile."
+    });
+  }
 });
 
 // Edit profile form

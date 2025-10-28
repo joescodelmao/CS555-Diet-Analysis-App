@@ -1,0 +1,193 @@
+/* public/css/food_upload.css */
+.food-upload-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.upload-header {
+  text-align: center;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.upload-header h1 {
+  color: #2c3e50;
+  margin-bottom: 10px;
+  font-size: 2.5rem;
+}
+
+.upload-header p {
+  color: #7f8c8d;
+  font-size: 1.1rem;
+}
+
+.form-section {
+  background: white;
+  border-radius: 12px;
+  padding: 25px;
+  margin-bottom: 25px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.form-section h3 {
+  color: #2c3e50;
+  margin: 0 0 20px 0;
+  font-size: 1.3rem;
+  border-bottom: 2px solid #3498db;
+  padding-bottom: 10px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #bdc3c7;
+  border-radius: 6px;
+  font-size: 16px;
+  transition: border-color 0.2s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: #3498db;
+}
+
+.form-group small {
+  display: block;
+  margin-top: 5px;
+  color: #7f8c8d;
+  font-size: 0.9rem;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.form-actions {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.btn {
+  padding: 12px 24px;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  transition: background-color 0.2s ease;
+}
+
+.btn-primary {
+  background: #3498db;
+  color: white;
+}
+
+.btn-primary:hover {
+  background: #2980b9;
+}
+
+.btn-secondary {
+  background: #95a5a6;
+  color: white;
+}
+
+.btn-secondary:hover {
+  background: #7f8c8d;
+}
+
+.upload-result {
+  margin-top: 30px;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.upload-result .loading {
+  text-align: center;
+  color: #3498db;
+  font-weight: 600;
+}
+
+.upload-result .success {
+  background: #d5f4e6;
+  border: 2px solid #27ae60;
+  color: #27ae60;
+}
+
+.upload-result .error {
+  background: #fdf2f2;
+  border: 2px solid #e74c3c;
+  color: #e74c3c;
+}
+
+.upload-result h4 {
+  margin: 0 0 10px 0;
+  font-size: 1.2rem;
+}
+
+.upload-result p {
+  margin: 5px 0;
+}
+
+.action-buttons {
+  margin-top: 15px;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+/* File input styling */
+.form-group input[type="file"] {
+  padding: 8px;
+  border: 2px dashed #bdc3c7;
+  background: #f8f9fa;
+}
+
+.form-group input[type="file"]:hover {
+  border-color: #3498db;
+  background: #e8f4fd;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .food-upload-container {
+    padding: 15px;
+  }
+  
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+  
+  .form-actions {
+    flex-direction: column;
+  }
+  
+  .action-buttons {
+    flex-direction: column;
+  }
+  
+  .upload-header h1 {
+    font-size: 2rem;
+  }
+}
