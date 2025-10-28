@@ -3,6 +3,7 @@ const router = Router();
 
 import { checkUsername, checkPassword, checkString } from "../helpers.js";
 import { register, login } from "../data/users.js";
+import { createOrUpdateProfile } from "../data/profiles.js";
 
 router.route("/").get(async (req, res) => {
   res.render("home", {
@@ -20,7 +21,7 @@ router
       stylesheet: "/public/css/register.css",
       script: "/public/js/register.js",
       hidden: "hidden",
-      registerpage: true
+      registerpage: true,
     });
   })
   .post(async (req, res) => {
@@ -29,6 +30,31 @@ router
       username = checkUsername(username);
       password = checkPassword(password);
       let newUser = await register(username, password);
+      let dummyRest = {
+        vegan: false,
+        vegetarian: false,
+        pescatarian: false,
+        gluten_free: false,
+        dairy_free: false,
+        nut_free: false,
+        peanut_free: false,
+        soy_free: false,
+        egg_free: false,
+        shellfish_free: false,
+        halal: false,
+        kosher: false,
+        low_carb: false,
+        low_sodium: false,
+        low_sugar: false,
+      };
+      let newUserProfile = await createOrUpdateProfile(newUser._id, {
+        name: "",
+        age: null,
+        height: null,
+        weight: null,
+        goal: "",
+        dietaryRestrictions: dummyRest,
+      });
       return res.redirect("/login");
     } catch (e) {
       return res.status(400).render("register", {
@@ -50,7 +76,7 @@ router
       stylesheet: "/public/css/login.css",
       script: "/public/js/login.js",
       hidden: "hidden",
-      registerpage: false
+      registerpage: false,
     });
   })
   .post(async (req, res) => {
