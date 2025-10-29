@@ -316,6 +316,27 @@ const exportedMethods = {
   },
 
   /**
+ * Get all foods in the database, for display only
+ * @returns {Array} Array of all foods with details
+ */
+async getAllFoods() {
+  const foodsData = await import("./foods.js");
+
+  const allFoodsData = await foodsData.default.getAllFoods(); // returns { foods: [...], pagination: {...} }
+  const allFoodsArray = allFoodsData.foods; // <-- extract the array
+
+  return allFoodsArray.map(food => ({
+    _id: food._id,
+    foodName: food.name,
+    mealType: "N/A",
+    quantity: food.servingSize || 1,
+    servingUnit: food.servingUnit || "servings",
+    date: food.dateAdded ? new Date(food.dateAdded).toISOString().split("T")[0] : "Unknown",
+    image: food.image || "/images/placeholder.png",
+  }));
+},
+
+  /**
    * Delete food entry
    * @param {string} id - Food entry ID
    * @returns {boolean} Success status
