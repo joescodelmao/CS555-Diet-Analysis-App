@@ -1,23 +1,35 @@
 <header>
   <h1>Diet Analysis App</h1>
 </header>
+
 <main>
   {{#if user}}
-  <p>
-    Welcome to the Diet Analysis App!
-  <br>
-  <br>
-    Start by customizing your profile in the "my profile" tab. These details can be changed anytime!
-  <br>
-  <br>
-    Upload meals for free at any time and see the nutritional breakdown of your plate.
-    We'll let you know if your meal aligns with your goals
-  <br>
-  <br>
-    View your meal history, but first, <a href="/upload">upload a meal!</a>
-  </p>
+    <h2>Welcome {{user.firstName}}!</h2>
+
+    <section id="logged-meals">
+      <h3>Previously Logged Meals</h3>
+
+      {{#if hasMeals}}
+        <div class="meal-list">
+          {{#each logs}}
+            <div class="meal-card">
+              <img src="{{this.image}}" alt="{{this.foodName}}" onerror="this.src='/images/placeholder.png'">
+              <div class="meal-info">
+                <h4>{{this.foodName}}</h4>
+                <p><strong>Type:</strong> {{this.mealType}}</p>
+                <p><strong>Date:</strong> {{this.date}}</p>
+                <p><strong>Quantity:</strong> {{this.quantity}} {{this.servingUnit}}</p>
+              </div>
+            </div>
+          {{/each}}
+        </div>
+      {{else}}
+        <p>No meals have been logged yet.</p>
+      {{/if}}
+    </section>
+
   {{else}}
-  <a href="/register">Register</a>
-  <a href="/login">Login</a>
+    <a href="/register">Register</a>
+    <a href="/login">Login</a>
   {{/if}}
 </main>
