@@ -3,6 +3,8 @@ import profileRoutes from "./profile.js";
 import nutritionalRoutes from "./nutritional.js";
 import uploadRoutes from "./upload.js";
 
+import foodLogsData from "../data/foodLogs.js";
+
 
 const constructorMethod = (app) => {
   app.use("/", routes);
@@ -11,13 +13,36 @@ const constructorMethod = (app) => {
   app.use("/api", nutritionalRoutes);
   app.use("/upload", uploadRoutes);
 
-  app.get("/home", (req, res) => {
+  /*app.get("/home", (req, res) => {
     return res.render("home", {
       title: "Home",
       stylesheet: "/public/css/home.css",
       user: req.session.user,
     });
-  });
+  });*/
+  app.get("/home", async (req, res) => {
+  try {
+    const allFoods = await foodLogsData.getAllFoods();
+
+    res.render("home", {
+      title: "Home",
+      stylesheet: "/public/css/home.css",
+      user: req.session.user,
+      hasMeals: allFoods.length > 0,
+      logs: allFoods,
+    });
+  } catch (error) {
+    console.error("Error loading foods:", error);
+    res.status(500).render("home", {
+      title: "Home",
+      stylesheet: "/public/css/home.css",
+      error: "Could not load foods",
+    });
+  }
+});
+
+
+
 
   app.get("/nutritional", (req, res) => {
     if (!req.session.user) {
