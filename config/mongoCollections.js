@@ -15,3 +15,6 @@ const getCollectionFn = (collection) => {
 
 export const users = getCollectionFn("users");
 export const profiles = getCollectionFn("profiles");
+export const foods = getCollectionFn("foods");
+export const foodLogs = getCollectionFn("foodLogs");
+export const nutritionalGoals = getCollectionFn("nutritionalGoals");

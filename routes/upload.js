@@ -34,6 +34,66 @@ const upload = multer({ storage });
 router
   .route("/")
   .get(async (req, res) => {
+    return res.redirect("/upload/food");
+  });
+
+router
+  .route("/food")
+  .get(async (req, res) => {
+    if (!req.session.user) {
+      return res.redirect("/login");
+    }
+    res.render("food_upload", {
+      title: "Add Food",
+      stylesheet: "/public/css/food_upload.css",
+      user: req.session.user,
+    });
+  })
+  .post(upload.single("foodImage"), async (req, res) => {
+    try {
+      if (!req.session.user) {
+        return res.status(401).json({ error: "Authentication required" });
+      }
+
+      const { name, brand, category, calories, protein, carbohydrates, fat, fiber, sugar, sodium, servingSize, servingUnit } = req.body;
+
+      if (!name) {
+        return res.status(400).json({ error: "Food name is required" });
+      }
+
+      const imageUrl = req.file ? `/uploads/${req.file.filename}` : null;
+
+      // Import addFood here to avoid circular dependencies
+      const { addFood } = await import("../data/foods.js");
+
+      const food = await addFood({
+        name,
+        brand: brand || null,
+        category: category || null,
+        nutrients: {
+          calories: parseFloat(calories) || 0,
+          protein: parseFloat(protein) || 0,
+          carbohydrates: parseFloat(carbohydrates) || 0,
+          fat: parseFloat(fat) || 0,
+          fiber: parseFloat(fiber) || 0,
+          sugar: parseFloat(sugar) || 0,
+          sodium: parseFloat(sodium) || 0
+        },
+        servingSize: parseFloat(servingSize) || 100,
+        servingUnit: servingUnit || "g",
+        imageUrl,
+        source: "manual"
+      });
+
+      res.json({ success: true, food });
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  });
+
+router
+  .route("/meal")
+  .get(async (req, res) => {
     res.render("upload", {
       title: "Upload Meal Photo",
       stylesheet: "/public/css/upload.css",

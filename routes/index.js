@@ -1,6 +1,7 @@
 import routes from "./main.js";
 import profileRoutes from "./profile.js";
 import uploadRoutes from "./upload.js";
+import nutritionalRoutes from "./nutritional.js";
 
 
 const constructorMethod = (app) => {
@@ -9,6 +10,32 @@ const constructorMethod = (app) => {
   app.use("/profile", profileRoutes);
   
   app.use("/upload", uploadRoutes);
+
+  app.use("/api/nutritional", nutritionalRoutes);
+
+  // Nutritional dashboard page
+  app.get("/nutritional", (req, res) => {
+    if (!req.session.user) {
+      return res.redirect("/login");
+    }
+    return res.render("nutritional", {
+      title: "Nutritional Dashboard",
+      stylesheet: "/public/css/nutritional.css",
+      user: req.session.user,
+    });
+  });
+
+  // Goals setup page
+  app.get("/goals-setup", (req, res) => {
+    if (!req.session.user) {
+      return res.redirect("/login");
+    }
+    return res.render("goals_setup", {
+      title: "Set Nutritional Goals",
+      stylesheet: "/public/css/nutritional.css",
+      user: req.session.user,
+    });
+  });
 
   app.get("/home", (req, res) => {
     return res.render("home", {

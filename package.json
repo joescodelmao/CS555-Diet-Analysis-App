@@ -21,6 +21,7 @@
   "dependencies": {
     "@tensorflow-models/mobilenet": "^2.1.1",
     "@tensorflow/tfjs": "^4.22.0",
+    "axios": "^1.7.7",
     "bcrypt": "^6.0.0",
     "bcryptjs": "^3.0.2",
     "canvas": "^3.2.0",
@@ -30,6 +31,7 @@
     "fs": "^0.0.1-security",
     "mongodb": "^6.20.0",
     "multer": "^2.0.2",
+    "node-cache": "^5.1.2",
     "path": "^0.12.7"
   },
   "devDependencies": {

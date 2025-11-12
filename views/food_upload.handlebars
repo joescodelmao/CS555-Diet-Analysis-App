@@ -1,0 +1,125 @@
+<div class="food-upload">
+  <h1>Add Food</h1>
+  <form id="foodUploadForm" enctype="multipart/form-data">
+    <div class="form-group">
+      <label for="foodImage">Food Image (optional)</label>
+      <input type="file" id="foodImage" name="foodImage" accept="image/*">
+      <div id="imagePreview"></div>
+    </div>
+
+    <div class="form-group">
+      <label for="name">Food Name *</label>
+      <input type="text" id="name" name="name" required>
+    </div>
+
+    <div class="form-group">
+      <label for="brand">Brand (optional)</label>
+      <input type="text" id="brand" name="brand">
+    </div>
+
+    <div class="form-group">
+      <label for="category">Category (optional)</label>
+      <input type="text" id="category" name="category">
+    </div>
+
+    <div class="form-group">
+      <label for="servingSize">Serving Size</label>
+      <input type="number" id="servingSize" name="servingSize" value="100" step="0.1">
+    </div>
+
+    <div class="form-group">
+      <label for="servingUnit">Serving Unit</label>
+      <select id="servingUnit" name="servingUnit">
+        <option value="g">g (grams)</option>
+        <option value="oz">oz (ounces)</option>
+        <option value="ml">ml (milliliters)</option>
+        <option value="cup">cup</option>
+        <option value="tbsp">tbsp</option>
+        <option value="tsp">tsp</option>
+      </select>
+    </div>
+
+    <h3>Nutritional Information (per serving)</h3>
+    
+    <div class="form-group">
+      <label for="calories">Calories</label>
+      <input type="number" id="calories" name="calories" step="0.1" value="0">
+    </div>
+
+    <div class="form-group">
+      <label for="protein">Protein (g)</label>
+      <input type="number" id="protein" name="protein" step="0.1" value="0">
+    </div>
+
+    <div class="form-group">
+      <label for="carbohydrates">Carbohydrates (g)</label>
+      <input type="number" id="carbohydrates" name="carbohydrates" step="0.1" value="0">
+    </div>
+
+    <div class="form-group">
+      <label for="fat">Fat (g)</label>
+      <input type="number" id="fat" name="fat" step="0.1" value="0">
+    </div>
+
+    <div class="form-group">
+      <label for="fiber">Fiber (g)</label>
+      <input type="number" id="fiber" name="fiber" step="0.1" value="0">
+    </div>
+
+    <div class="form-group">
+      <label for="sugar">Sugar (g)</label>
+      <input type="number" id="sugar" name="sugar" step="0.1" value="0">
+    </div>
+
+    <div class="form-group">
+      <label for="sodium">Sodium (mg)</label>
+      <input type="number" id="sodium" name="sodium" step="0.1" value="0">
+    </div>
+
+    <button type="submit" class="btn btn-primary">Add Food</button>
+  </form>
+
+  <div id="successMessage" style="display: none;">
+    <p>Food added successfully!</p>
+    <a href="/nutritional">Go to Nutritional Dashboard</a>
+  </div>
+</div>
+
+<script>
+document.getElementById('foodImage').addEventListener('change', (e) => {
+  const file = e.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      document.getElementById('imagePreview').innerHTML = `<img src="${e.target.result}" style="max-width: 200px; margin-top: 10px;">`;
+    };
+    reader.readAsDataURL(file);
+  }
+});
+
+document.getElementById('foodUploadForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  
+  const formData = new FormData(e.target);
+  
+  try {
+    const response = await fetch('/upload/food', {
+      method: 'POST',
+      credentials: 'include',
+      body: formData
+    });
+
+    const data = await response.json();
+    
+    if (data.success) {
+      document.getElementById('foodUploadForm').style.display = 'none';
+      document.getElementById('successMessage').style.display = 'block';
+    } else {
+      alert('Error: ' + data.error);
+    }
+  } catch (error) {
+    alert('Error: ' + error.message);
+  }
+});
+</script>
+
