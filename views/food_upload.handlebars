@@ -78,6 +78,14 @@
 
     <button type="submit" class="btn btn-primary">Add Food</button>
   </form>
+  
+  <div id="predictionsContainer" style="display: none;">
+    <h1 id="predictionMessage">Food classification:</h1>
+    <img id="predictionImage" alt="Uploaded Meal Photo" style="max-width: 300px; border-radius: 10px;">
+    <div id="predictionList"></div>
+    <a href="/">Return Home</a>
+  </div>
+</div>
 
   <div id="successMessage" style="display: none;">
     <p>Food added successfully!</p>
@@ -114,6 +122,21 @@ document.getElementById('foodUploadForm').addEventListener('submit', async (e) =
     if (data.success) {
       document.getElementById('foodUploadForm').style.display = 'none';
       document.getElementById('successMessage').style.display = 'block';
+
+      if (data.predictions && data.predictions.length > 0) {
+        document.getElementById('predictionsContainer').style.display = 'block';
+        document.getElementById('predictionMessage').textContent = data.message;
+        document.getElementById('predictionImage').src = data.imagePath;
+
+        const list = document.getElementById('predictionList');
+        list.innerHTML = '<h2>Predictions</h2><ul>' + 
+          data.predictions.map(p => `<li><strong>${p.className}</strong> — confidence: ${(p.probability*100).toFixed(2)}%</li>`).join('') + '</ul>';
+      } else {
+        document.getElementById('predictionsContainer').style.display = 'block';
+        document.getElementById('predictionMessage').textContent = data.message;
+        document.getElementById('predictionImage').src = data.imagePath;
+        document.getElementById('predictionList').innerHTML = '<p>Not food.</p>';
+    }
     } else {
       alert('Error: ' + data.error);
     }

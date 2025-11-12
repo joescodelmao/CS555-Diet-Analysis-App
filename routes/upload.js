@@ -85,6 +85,18 @@ router
         source: "manual"
       });
 
+      let predictions = [];
+      if (req.file) {
+      const imagePath = `./public/uploads/${req.file.filename}`;
+      const image = await loadImage(imagePath);
+      const canvas = createCanvas(image.width, image.height);
+      const ctx = canvas.getContext("2d");
+      ctx.drawImage(image, 0, 0, image.width, image.height);
+      predictions = await model.classify(canvas);
+}
+
+res.json({ success: true, food, predictions, message: "Food uploaded and classified!" });
+
       res.json({ success: true, food });
     } catch (error) {
       res.status(500).json({ error: error.message });
@@ -130,11 +142,11 @@ router
       ctx.drawImage(image, 0, 0, image.width, image.height);
       const predictions = await model.classify(canvas);
 
-    res.render("upload_success", {
-      title: "Upload Success",
-      imagePath: `/uploads/${req.file.filename}`,
+    res.json({
+      success: true,
       message: "Meal photo uploaded successfully!",
-      predictions,
+      imagePath: `/uploads/${req.file.filename}`,
+      predictions, // array from mobilenet
     });
   } 
   catch (err) {
