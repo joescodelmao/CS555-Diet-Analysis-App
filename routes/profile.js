@@ -21,7 +21,10 @@ router.get("/", async (req, res) => {
       title: "My Profile",
       stylesheet: "/public/css/profile.css",
       user: req.session.user,
-      noRestrictions: profile && profile.dietaryRestrictions ? checkForNoRestrictions(profile.dietaryRestrictions) : true
+      noRestrictions:
+        profile && profile.dietaryRestrictions
+          ? checkForNoRestrictions(profile.dietaryRestrictions)
+          : true,
     });
   } catch (error) {
     res.render("profile", {
@@ -30,7 +33,7 @@ router.get("/", async (req, res) => {
       stylesheet: "/public/css/profile.css",
       user: req.session.user,
       noRestrictions: true,
-      error: "Profile not found. Please create your profile."
+      error: "Profile not found. Please create your profile.",
     });
   }
 });
@@ -69,6 +72,7 @@ router.post("/edit", async (req, res) => {
     low_carb,
     low_sodium,
     low_sugar,
+    custom_restrictions,
   } = req.body;
 
   const dietaryRestrictions = {
@@ -87,6 +91,7 @@ router.post("/edit", async (req, res) => {
     low_carb: low_carb ? true : false,
     low_sodium: low_sodium ? true : false,
     low_sugar: low_sugar ? true : false,
+    custom_restrictions: custom_restrictions ? custom_restrictions : null,
   };
   let noRestrictions = checkForNoRestrictions(dietaryRestrictions);
   await createOrUpdateProfile(req.session.user._id, {

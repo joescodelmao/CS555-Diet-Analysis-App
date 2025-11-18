@@ -61,9 +61,9 @@ export const checkPassword = (password) => {
 export const checkForNoRestrictions = (dietaryRestrictions) => {
   let noRestrictions = true;
   for (let o in dietaryRestrictions) {
-    if (dietaryRestrictions[o]) {
+    if (dietaryRestrictions[o] === false || dietaryRestrictions[o] === null) {
       noRestrictions = false;
     }
   }
-  return noRestrictions
-}
+  return noRestrictions;
+};

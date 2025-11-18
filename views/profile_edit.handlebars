@@ -63,6 +63,9 @@
 <label>Low-sugar</label>
 <input type="checkbox" name="low_sugar" value="true" {{#if profile.dietaryRestrictions.low_sugar}}checked{{/if}}><br>
 
+<Label>List Other Dietary Restrictions Here:</Label>
+<input name="custom_restrictions" value = "{{profile.dietaryRestrictions.custom_restrictions}}">
+
 
   <button type="submit">Save Profile</button>
 </form>

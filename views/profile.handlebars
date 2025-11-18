@@ -6,7 +6,7 @@
   <p><strong>Weight:</strong> {{profile.weight}} kg</p>
   <p><strong>Goal:</strong> {{profile.goal}}</p>
   {{#if noRestrictions}}
-  <p><strong>No Dietary Restrictions</strong></p>
+    <p><strong>No Dietary Restrictions</strong></p>
   {{/if}}
   {{#if profile.dietaryRestrictions.vegan}}
     <p><strong>Vegan</strong></p>
@@ -66,6 +66,9 @@
 
   {{#if profile.dietaryRestrictions.low_sugar}}
     <p><strong>Low-sugar</strong></p>
+  {{/if}}
+  {{#if profile.dietaryRestrictions.custom_restrictions}}
+    <p><strong>{{profile.dietaryRestrictions.custom_restrictions}}</strong></p>
   {{/if}}
   <a href="/profile/edit">Edit Profile</a>
 {{else}}
