@@ -176,3 +176,25 @@ updateInfo._id = updateInfo._id.toString();
 return updateInfo;
 
 }
+
+export const getAllUsers = async () => {
+  const userCollection = await users();
+        
+        //get collection of users
+        let userList = await userCollection.find({}).toArray();
+        
+        //if userList errors
+        if (!userList) {
+            throw 'userList could not be retrieved'
+                
+        }
+        
+        //modify the objectIds to strings for return
+        userList = userList.map((element) => {
+            element._id = element._id.toString();
+            return element;
+        });
+
+        return userList
+
+}
