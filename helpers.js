@@ -1,3 +1,4 @@
+import {ObjectId} from 'mongodb'
 export const checkString = (val, name = "Variable") => {
   if (typeof val !== "string") {
     throw `${name} must exist and be a string`;
@@ -66,4 +67,15 @@ export const checkForNoRestrictions = (dietaryRestrictions) => {
     }
   }
   return noRestrictions
+}
+
+export const checkId = (id) => {
+  if (!id || typeof id !== 'string' ) throw 'invalid id: not provided'
+  id = id.trim();
+  
+  if (id === "") throw 'invalid id: empty string'
+
+  if (!ObjectId.isValid(id)) throw 'invalid id: not proper ObjectId'
+
+  return id;
 }
