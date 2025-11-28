@@ -20,6 +20,7 @@ router
       stylesheet: "/public/css/register.css",
       script: "/public/js/register.js",
       hidden: "hidden",
+      registerpage: true
     });
   })
   .post(async (req, res) => {
@@ -49,6 +50,7 @@ router
       stylesheet: "/public/css/login.css",
       script: "/public/js/login.js",
       hidden: "hidden",
+      registerpage:false
     });
   })
   .post(async (req, res) => {

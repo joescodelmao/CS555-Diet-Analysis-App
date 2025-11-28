@@ -2,6 +2,22 @@
   <h1>Diet Analysis App</h1>
 </header>
 <main>
+  {{#if user}}
+  <p>
+    Welcome to the Diet Analysis App!
+  <br>
+  <br>
+    Start by customizing your profile in the "my profile" tab. These details can be changed anytime!
+  <br>
+  <br>
+    Upload meals for free at any time and see the nutritional breakdown of your plate.
+    We'll let you know if your meal aligns with your goals
+  <br>
+  <br>
+    View your meal history, but first, <a href="/upload">upload a meal!</a>
+  </p>
+  {{else}}
   <a href="/register">Register</a>
   <a href="/login">Login</a>
+  {{/if}}
 </main>

@@ -16,7 +16,11 @@
             | <a href="/ingredient-recognition">Ingredient Recognition</a>
             | <a href="/logout">Logout</a>
         {{else}}
-            | <a href="/login">Login</a>
+        {{#if registerpage}}
+            <a href="/login">Login</a>
+        {{else}}
+            <a href="/register">Register</a>
+        {{/if}}
         {{/if}}
     </nav>
     <hr>
