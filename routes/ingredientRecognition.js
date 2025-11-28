@@ -2,8 +2,8 @@ import express from 'express';
 import multer from 'multer';
 import fs from 'fs';
 import path from 'path';
-import * as tf from '@tensorflow/tfjs-node';
-import mobilenet from '@tensorflow-models/mobilenet';
+// import * as tf from '@tensorflow/tfjs-node';
+// import mobilenet from '@tensorflow-models/mobilenet';
 import apiService from '../services/apiService.js';
 
 const router = express.Router();
@@ -12,11 +12,11 @@ const router = express.Router();
 const upload = multer({ storage: multer.memoryStorage() });
 
 // Load MobileNet model once
-let mobilenetModel;
-mobilenet.load().then(model => {
-  mobilenetModel = model;
-  console.log('mobilenet model loaded.');
-});
+// let mobilenetModel;
+// mobilenet.load().then(model => {
+//   mobilenetModel = model;
+//   console.log('mobilenet model loaded.');
+// });
 
 // Ensure corrections folder exists
 const correctionsDir = path.resolve('data');

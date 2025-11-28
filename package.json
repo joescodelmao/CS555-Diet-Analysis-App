@@ -19,13 +19,11 @@
   },
   "homepage": "https://github.com/joescodelmao/CS555-Diet-Analysis-App#readme",
   "dependencies": {
-    "@tensorflow-models/mobilenet": "^2.1.1",
-    "@tensorflow/tfjs": "^4.22.0",
-    "@tensorflow/tfjs-node": "^4.22.0",
     "axios": "^1.7.7",
     "bcrypt": "^6.0.0",
     "bcryptjs": "^3.0.2",
     "canvas": "^3.2.0",
+    "dotenv": "^17.2.3",
     "express": "^5.1.0",
     "express-handlebars": "^8.0.1",
     "express-session": "^1.18.2",
@@ -33,6 +31,7 @@
     "mongodb": "^6.20.0",
     "multer": "^2.0.2",
     "node-cache": "^5.1.2",
+    "openai": "^6.9.1",
     "path": "^0.12.7"
   },
   "devDependencies": {

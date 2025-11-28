@@ -1,0 +1,24 @@
+<h1>Exercise Advice</h1>
+
+<textarea id="prompt" rows="5" cols="50" placeholder="Enter your goal here..."></textarea>
+<br><br>
+
+<button id="generateBtn">Run AI</button>
+
+<h2>Result:</h2>
+<pre id="resultBox"></pre>
+
+<script>
+  document.getElementById("generateBtn").addEventListener("click", async () => {
+    const prompt = document.getElementById("prompt").value;
+
+    const response = await fetch("/gpt/exercise", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ prompt })
+    });
+
+    const data = await response.json();
+    document.getElementById("resultBox").textContent = data.result || "Error";
+  });
+</script>

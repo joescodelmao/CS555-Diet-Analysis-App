@@ -2,16 +2,18 @@ import routes from "./main.js";
 import profileRoutes from "./profile.js";
 import uploadRoutes from "./upload.js";
 import nutritionalRoutes from "./nutritional.js";
-
+import gptRoutes from "./gptRoutes.js";
 
 const constructorMethod = (app) => {
   app.use("/", routes);
 
   app.use("/profile", profileRoutes);
-  
+
   app.use("/upload", uploadRoutes);
 
   app.use("/api/nutritional", nutritionalRoutes);
+
+  app.use("/gpt", gptRoutes);
 
   // Nutritional dashboard page
   app.get("/nutritional", (req, res) => {
@@ -23,6 +25,13 @@ const constructorMethod = (app) => {
       stylesheet: "/public/css/nutritional.css",
       user: req.session.user,
     });
+  });
+
+  app.get("/exercise", (req, res) => {
+    if (!req.session.user) {
+      return res.redirect("/login");
+    }
+    return res.render("exercise");
   });
 
   // Goals setup page
