@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { getProfileByUserId, createOrUpdateProfile } from "../data/profiles.js";
 import { checkForNoRestrictions } from "../helpers.js";
+import { getUserById } from "../data/users.js";
 
 const router = Router();
 
@@ -16,11 +17,13 @@ router.use((req, res, next) => {
 router.get("/", async (req, res) => {
   try {
     const profile = await getProfileByUserId(req.session.user._id);
+    const user = await getUserById(req.session.user._id)
+    //console.log(user)
     res.render("profile", {
       profile,
-      title: "My Profile",
+      title: `Your Profile`,
       stylesheet: "/public/css/profile.css",
-      user: req.session.user,
+      user,
       noRestrictions: profile && profile.dietaryRestrictions ? checkForNoRestrictions(profile.dietaryRestrictions) : true
     });
   } catch (error) {

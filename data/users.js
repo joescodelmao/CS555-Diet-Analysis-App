@@ -2,7 +2,7 @@ import { checkId, checkUsername, checkPassword, checkString } from "../helpers.j
 
 import { users } from "../config/mongoCollections.js";
 import bcrypt from "bcryptjs";
-
+import {ObjectId} from 'mongodb'
 export const register = async (username, password) => {
   if (!username || !password) {
     throw `Must supply username and password`;
@@ -22,7 +22,8 @@ export const register = async (username, password) => {
     username: username,
     password: hashedPassword,
     following: [],
-    followers: []
+    followers: [],
+    _id: new ObjectId()
   };
 
   const insertInfo = await userCollection.insertOne(newUser);
@@ -68,15 +69,12 @@ export const getUserById = async (id) => {
 
   // Input validation.
   id = checkId(id, "getUserById");
-
   // Get users collection.
-  const userCollection = await users();
-
+  let userCollection = await users();
   // Find the user with the given ID.
-  const user = await userCollection.findOne({ _id: new ObjectId(id) });
-
+  let user = await userCollection.findOne({ _id: new ObjectId(id) });
   //user not found
-  if (user === null) {
+  if (!user) {
       throw 'getUserById error'
   }
 
@@ -84,6 +82,8 @@ export const getUserById = async (id) => {
   user._id = user._id.toString();
   return user;
 }
+
+
 
 export const follow = async (id, friendId) => {
 
@@ -198,3 +198,5 @@ export const getAllUsers = async () => {
         return userList
 
 }
+
+//console.log(await getUserById("692a4b946944e90c8b26beca"))
