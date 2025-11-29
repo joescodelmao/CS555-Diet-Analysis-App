@@ -3,6 +3,7 @@ import profileRoutes from "./profile.js";
 import uploadRoutes from "./upload.js";
 import nutritionalRoutes from "./nutritional.js";
 import gptRoutes from "./gptRoutes.js";
+import userRoutes from "./users.js"
 
 const constructorMethod = (app) => {
   app.use("/", routes);
@@ -15,6 +16,7 @@ const constructorMethod = (app) => {
 
   app.use("/gpt", gptRoutes);
 
+  app.use("/users", userRoutes)
   // Nutritional dashboard page
   app.get("/nutritional", (req, res) => {
     if (!req.session.user) {

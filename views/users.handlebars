@@ -1,0 +1,13 @@
+<div>
+    <h1>All Users</h1>
+
+    {{#if users.length}}
+        <ul>
+            {{#each users}}
+                <li>{{this.username}}</li>
+            {{/each}}
+        </ul>
+    {{else}}
+        <p>No other users found.</p>
+    {{/if}}
+</div>
