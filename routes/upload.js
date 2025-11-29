@@ -4,19 +4,19 @@ import path from "path";
 import fs from "fs";
 
 //image classification stuff
-import * as tf from '@tensorflow/tfjs';
-import * as mobilenet from '@tensorflow-models/mobilenet';
-import { createCanvas, loadImage } from "canvas";
+// import * as tf from '@tensorflow/tfjs';
+// import * as mobilenet from '@tensorflow-models/mobilenet';
+// import { createCanvas, loadImage } from "canvas";
 
 const router = Router();
 
 //mobilenet model
 let model;
 
-(async () => {
-  model = await mobilenet.load();
-  console.log("mobilenet model loaded.");
-})();
+// (async () => {
+//   model = await mobilenet.load();
+//   console.log("mobilenet model loaded.");
+// })();
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
