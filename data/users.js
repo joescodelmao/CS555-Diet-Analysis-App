@@ -68,7 +68,8 @@ export const login = async (username, password) => {
 export const getUserById = async (id) => {
 
   // Input validation.
-  id = checkId(id, "getUserById");
+  //console.log(id)
+  id = checkId(id);
   // Get users collection.
   let userCollection = await users();
   // Find the user with the given ID.
@@ -87,17 +88,13 @@ export const getUserById = async (id) => {
 
 export const follow = async (id, friendId) => {
 
-  //input validation
   id = checkId(id);
   friendId = checkId(friendId);
-
-
   const user = await getUserById(id);
-
+  console.log(user)
   const user_to_friend = await getUserById(friendId);
-
   //check to see if users are already friends
-  for (let friend of user.friends){
+  for (let friend of user.following){
     if(friend === friendId){
       throw 'already friends!'
     }
@@ -114,7 +111,7 @@ export const follow = async (id, friendId) => {
   );
 
   if (!updateInfo) {
-    throw `Could not update user's friends list`
+    throw `Could not update user's following list`
   }
   //update second users followers list
   const updateInfo2 = await userCollection.findOneAndUpdate(
@@ -124,7 +121,7 @@ export const follow = async (id, friendId) => {
 );
   
   if (!updateInfo2) {
-    throw 'Could not update users friends list'
+    throw 'Could not update users followers list'
   }
 
 return true;

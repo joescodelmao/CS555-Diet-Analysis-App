@@ -18,12 +18,16 @@ router.get("/", async (req, res) => {
   try {
     const profile = await getProfileByUserId(req.session.user._id);
     const user = await getUserById(req.session.user._id)
-    //console.log(user)
+    let social = true;
+    if (profile === null){
+      social = false
+    }
     res.render("profile", {
       profile,
       title: `Your Profile`,
       stylesheet: "/public/css/profile.css",
       user,
+      social,
       noRestrictions: profile && profile.dietaryRestrictions ? checkForNoRestrictions(profile.dietaryRestrictions) : true
     });
   } catch (error) {
@@ -33,7 +37,8 @@ router.get("/", async (req, res) => {
       stylesheet: "/public/css/profile.css",
       user: req.session.user,
       noRestrictions: true,
-      error: "Profile not found. Please create your profile."
+      error: "Profile not found. Please create your profile.",
+      social: false
     });
   }
 });

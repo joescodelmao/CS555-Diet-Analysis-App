@@ -1,10 +1,15 @@
 <div>
-    <h1>All Users</h1>
-
+    <h1>Users</h1>
+    <p> Find your friends, or make new friends with similar goals! </p>
     {{#if users.length}}
         <ul>
             {{#each users}}
-                <li>{{this.username}}</li>
+                <li>{{this.username}} - {{this.profile.goal}}
+                    <form action="/users/{{this.follow_or_unfollow}}/{{this._id}}" method="POST">
+                    <button type="submit">{{this.follow_or_unfollow}}</button>
+                    </form>
+                </li> 
+                <p>Followers: {{this.followers.length}} Following: {{this.following.length}}</p>
             {{/each}}
         </ul>
     {{else}}
