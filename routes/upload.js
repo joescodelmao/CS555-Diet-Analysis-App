@@ -45,7 +45,7 @@ router
     }
     res.render("food_upload", {
       title: "Add Food",
-      stylesheet: "/public/css/food_upload.css",
+      stylesheet: "/public/css/upload.css",
       user: req.session.user,
     });
   })

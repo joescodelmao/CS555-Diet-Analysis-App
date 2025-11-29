@@ -45,7 +45,7 @@ router.get("/", async (req, res) => {
         }
         res.render("users", {
             users,
-            style: "/public/css/profile.css",
+            stylesheet: "/public/css/users.css",
             title: "Userlist",
             user,
         });
