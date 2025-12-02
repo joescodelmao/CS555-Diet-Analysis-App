@@ -1,7 +1,3 @@
-/* =========================================================
-   Register Page Styles
-   ========================================================= */
-
 main {
     font-family: 'Inter', Arial, sans-serif;
     background-color: #F7F9F7;
@@ -12,7 +8,7 @@ main {
     padding: 40px 20px;
 }
 
-/* Container card */
+
 main > div {
     background-color: #FFFFFF;
     padding: 40px 35px;
@@ -25,14 +21,14 @@ main > div {
     align-items: center;
 }
 
-/* Title */
+
 main h1 {
     color: #2E7D32;
     font-size: 2rem;
     margin-bottom: 20px;
 }
 
-/* Error message */
+
 #error {
     color: #D32F2F;
     font-size: 14px;
@@ -40,7 +36,7 @@ main h1 {
     text-align: center;
 }
 
-/* ----------------- Form ----------------- */
+
 form {
     width: 100%;
     display: flex;
@@ -49,7 +45,7 @@ form {
     margin-bottom: 20px;
 }
 
-/* Labels and inputs */
+
 form label {
     font-weight: 500;
     font-size: 14px;
@@ -75,7 +71,6 @@ form input[type="password"]:focus {
     box-shadow: 0 0 5px rgba(76, 175, 80, 0.3);
 }
 
-/* ----------------- Submit Button ----------------- */
 form input[type="submit"] {
     width: 100%;
     padding: 14px;
@@ -94,7 +89,6 @@ form input[type="submit"]:hover {
     transform: scale(1.03);
 }
 
-/* ----------------- Links ----------------- */
 main a {
     color: #4CAF50;
     text-decoration: none;
@@ -140,7 +134,3 @@ hr {
     background-color: #bdc3c7;
     margin: 0;
 }
-
-
-
-  
