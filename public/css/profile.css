@@ -1,169 +1,129 @@
-/* =========================================================
-   Profile + Profile Edit Combined Styles
-   ========================================================= */
-
-/* ----------------- General Page Layout ----------------- */
 main, body {
-    font-family: 'Inter', Arial, sans-serif;
-    background: #F7F9F7;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f7f7f7;
     color: #333;
     min-height: 100vh;
-    padding: 50px 20px;
+    padding: 40px 20px;
     display: flex;
     flex-direction: column;
 }
 
-/* ----------------- Profile Header ----------------- */
-h1 {
-    color: #2E7D32;
-    text-align: center;
-    margin-bottom: 25px;
-    font-size: 2rem;
-    font-weight: 600;
+
+.profile-container {
+    max-width: 700px;
+    margin: 40px auto;
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 14px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.1);
 }
 
-/* ----------------- Profile Information ----------------- */
+h1 {
+    text-align: center;
+    font-size: 2.2rem;
+    margin-bottom: 5px;
+    color: #222;
+}
+
 p {
-    background-color: #FFFFFF;
-    padding: 15px 20px;
-    border-radius: 12px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-    width: 100%;
-    max-width: 520px;
+    background: #f7f7f7;
+    padding: 18px 22px;
+    border-radius: 10px;
+    border: 1px solid #e5e5e5;
+    font-size: 1rem;
+    margin: 12px 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 8px 0;
-    transition: background 0.2s ease;
-}
-
-p:hover {
-    background-color: #F1FFF1;
 }
 
 p strong {
-    color: #4CAF50;
+    font-weight: 500;
+    color: #222;
+}
+
+p a {
+    color: green;
     font-weight: 600;
-    min-width: 120px;
+    text-decoration: none;
+}
+
+p a:hover {
+    text-decoration: underline;
 }
 
 a {
     display: inline-block;
     margin-top: 18px;
-    color: #4CAF50;
+    color: green;
     text-decoration: none;
-    font-weight: 500;
-    transition: color 0.3s, text-decoration 0.3s;
+    font-weight: 600;
+    text-align: center;
 }
 
 a:hover {
+    color: #2E7D32;
     text-decoration: underline;
-    color: #43A047;
 }
 
-/* "No profile yet" link */
-p a {
-    color: #4CAF50;
-    font-weight: 500;
+a[href="/profile"] {
+    display: block;
+    margin-top: 20px;
 }
-
-p a:hover {
-    text-decoration: underline;
-    color: #43A047;
-}
-
-/* =========================================================
-   PROFILE EDIT FORM STYLING (from your existing CSS)
-   ========================================================= */
 
 form {
-    background-color: #FFFFFF;
-    padding: 30px 25px;
-    border-radius: 15px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-    max-width: 500px;
-    width: 100%;
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 14px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.1);
+    max-width: 600px;
+    margin: 30px auto;
     display: flex;
     flex-direction: column;
     gap: 15px;
-    margin: 0 auto;
 }
 
 form label {
     font-weight: 500;
-    font-size: 14px;
-    color: #555;
+    color: #333;
 }
 
-/* Inputs */
 form input[type="text"],
 form input[type="number"],
 form input[type="password"] {
-    width: 90%;
+    width: 95%;
     padding: 12px 15px;
     border-radius: 8px;
     border: 1px solid #ccc;
-    font-size: 16px;
-    outline: none;
-    transition: border 0.3s, box-shadow 0.3s;
+    font-size: 1rem;
 }
 
-form input[type="text"]:focus,
-form input[type="number"]:focus,
-form input[type="password"]:focus {
-    border-color: #4CAF50;
-    box-shadow: 0 0 5px rgba(76, 175, 80, 0.3);
+form input:focus {
+    border-color: lightgreen;
+    box-shadow: 0 0 4px rgba(144, 238, 144, 0.7);
 }
 
-/* Submit button */
 form button[type="submit"],
 form input[type="submit"] {
-    width: 90%;
-    padding: 15px;
-    background-color: #4CAF50;
-    color: #FFFFFF;
-    font-size: 16px;
-    font-weight: 500;
+    width: 95%;
+    padding: 14px;
+    background: lightgreen;
+    color: black;
+    font-size: 1rem;
+    font-weight: 600;
     border: none;
     border-radius: 8px;
     cursor: pointer;
-    transition: transform 0.3s, background 0.3s;
 }
 
 form button[type="submit"]:hover,
 form input[type="submit"]:hover {
-    background-color: #43A047;
-    transform: scale(1.03);
+    background: #7ee68a;
 }
 
-/* Optional: form group spacing */
-.form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-}
-
-/* Optional: error messages */
 .form-error {
     color: #D32F2F;
-    font-size: 13px;
-    margin-top: 3px;
-}
-
-/* ----------------- Back Link ----------------- */
-a[href="/profile"] {
-    display: block;
-    margin-top: 20px;
-    color: #4CAF50;
-    text-decoration: none;
-    font-weight: 500;
-    text-align: center;
-    transition: text-decoration 0.3s, color 0.3s;
-}
-
-a[href="/profile"]:hover {
-    text-decoration: underline;
-    color: #43A047;
+    font-size: 0.9rem;
 }
 
 nav {
@@ -188,7 +148,7 @@ nav a:hover {
 }
 
 nav a.active {
-    border-bottom: 2px lightgreen;
+    border-bottom: 2px solid lightgreen;
     padding-bottom: 2px;
 }
 
@@ -198,7 +158,4 @@ hr {
     background-color: #bdc3c7;
     margin: 0;
 }
-
-
-
   
