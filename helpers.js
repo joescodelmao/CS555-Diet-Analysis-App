@@ -1,4 +1,4 @@
-import {ObjectId} from 'mongodb'
+import { ObjectId } from "mongodb";
 export const checkString = (val, name = "Variable") => {
   if (typeof val !== "string") {
     throw `${name} must exist and be a string`;
@@ -66,16 +66,59 @@ export const checkForNoRestrictions = (dietaryRestrictions) => {
       noRestrictions = false;
     }
   }
-  return noRestrictions
-}
+  return noRestrictions;
+};
 
 export const checkId = (id) => {
-  if (!id || typeof id !== 'string' ) throw 'invalid id: not provided'
+  if (!id || typeof id !== "string") throw "invalid id: not provided";
   id = id.trim();
-  
-  if (id === "") throw 'invalid id: empty string'
 
-  if (!ObjectId.isValid(id)) throw 'invalid id: not proper ObjectId'
+  if (id === "") throw "invalid id: empty string";
+
+  if (!ObjectId.isValid(id)) throw "invalid id: not proper ObjectId";
 
   return id;
-}
+};
+
+export const parseFoodMessage = (message) => {
+  const keyMap = {
+    Food: "food",
+    Ingredients: "ingredients",
+    Nutrition: "nutrition",
+    "Analysis Based on Dietary Restrictions": "dietaryAnalysis",
+    "Analysis Based on Goal": "goalAnalysis",
+  };
+
+  const originalKeys = Object.keys(keyMap);
+
+  const result = {};
+  let currentKey = null;
+  let startIndex = 0;
+
+  const keyRegex = new RegExp(`(${originalKeys.join("|")}):`, "g");
+
+  const matches = Array.from(message.matchAll(keyRegex));
+
+  for (let i = 0; i < matches.length; i++) {
+    const match = matches[i];
+    const key = match[1];
+    const keyIndex = match.index;
+
+    if (currentKey !== null) {
+      const previousValue = message.substring(startIndex, keyIndex).trim();
+      const simplifiedKey = keyMap[currentKey];
+      result[simplifiedKey] = previousValue;
+    }
+
+    currentKey = key;
+    startIndex = keyIndex + match[0].length;
+  }
+
+  if (currentKey !== null) {
+    const lastValue = message.substring(startIndex).trim();
+    const simplifiedKey = keyMap[currentKey];
+    result[simplifiedKey] = lastValue;
+  }
+
+  return result;
+};

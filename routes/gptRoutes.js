@@ -2,8 +2,8 @@ import { Router } from "express";
 import { client } from "../openai.js";
 import multer from "multer";
 import fs from "fs";
-import { getUserById } from "../data/users.js";
 import { getProfileByUserId } from "../data/profiles.js";
+import { parseFoodMessage } from "../helpers.js";
 
 const router = Router();
 const upload = multer({ dest: "uploads/" });
@@ -124,7 +124,15 @@ Here is the user's goal: ${userGoal}
 
     const result = response.choices[0].message.content;
 
-    res.render("food", { result });
+    let parsedFood = parseFoodMessage(result);
+
+    res.render("food", {
+      food: parsedFood.food,
+      ingredients: parsedFood.ingredients,
+      nutrition: parsedFood.nutrition,
+      dietaryAnalysis: parsedFood.dietaryAnalysis,
+      goalAnalysis: parsedFood.goalAnalysis,
+    });
   } catch (err) {
     console.error(err);
     return res.status(500).send("Error analyzing image");
