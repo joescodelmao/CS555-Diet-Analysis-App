@@ -106,9 +106,11 @@ res.json({ success: true, food, predictions, message: "Food uploaded and classif
 router
   .route("/meal")
   .get(async (req, res) => {
+    //console.log(req.session.user)
     res.render("upload", {
       title: "Upload Meal Photo",
       stylesheet: "/public/css/upload.css",
+      user: req.session.user
     });
   })
   .post(upload.single("mealImage"), async (req, res) => {

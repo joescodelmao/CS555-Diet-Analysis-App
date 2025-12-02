@@ -33,7 +33,10 @@ const constructorMethod = (app) => {
     if (!req.session.user) {
       return res.redirect("/login");
     }
-    return res.render("exercise");
+    return res.render("exercise", {
+      user: req.session.user,
+      stylesheet: "/public/css/exercise.css"
+    });
   });
 
   // Goals setup page
@@ -44,7 +47,7 @@ const constructorMethod = (app) => {
     return res.render("goals_setup", {
       title: "Set Nutritional Goals",
       stylesheet: "/public/css/nutritional.css",
-      user: req.session.user,
+      user: req.session.user
     });
   });
 
