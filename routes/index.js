@@ -12,22 +12,10 @@ const constructorMethod = (app) => {
 
   app.use("/upload", uploadRoutes);
 
-  app.use("/api/nutritional", nutritionalRoutes);
-
   app.use("/gpt", gptRoutes);
 
   app.use("/users", userRoutes)
   // Nutritional dashboard page
-  app.get("/nutritional", (req, res) => {
-    if (!req.session.user) {
-      return res.redirect("/login");
-    }
-    return res.render("nutritional", {
-      title: "Nutritional Dashboard",
-      stylesheet: "/public/css/nutritional.css",
-      user: req.session.user,
-    });
-  });
 
   app.get("/exercise", (req, res) => {
     if (!req.session.user) {
@@ -39,17 +27,6 @@ const constructorMethod = (app) => {
     });
   });
 
-  // Goals setup page
-  app.get("/goals-setup", (req, res) => {
-    if (!req.session.user) {
-      return res.redirect("/login");
-    }
-    return res.render("goals_setup", {
-      title: "Set Nutritional Goals",
-      stylesheet: "/public/css/nutritional.css",
-      user: req.session.user
-    });
-  });
 
   app.get("/home", (req, res) => {
     return res.render("home", {

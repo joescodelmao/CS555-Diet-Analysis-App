@@ -18,6 +18,14 @@ let model;
 //   console.log("mobilenet model loaded.");
 // })();
 
+
+router.use((req, res, next) => {
+  if (!req.session.user) {
+    return res.redirect("/login");
+  }
+  next();
+});
+
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
       const uploadDir = "./public/uploads";
@@ -106,7 +114,7 @@ res.json({ success: true, food, predictions, message: "Food uploaded and classif
 router
   .route("/meal")
   .get(async (req, res) => {
-    //console.log(req.session.user)
+    console.log(req.session.user._id)
     res.render("upload", {
       title: "Upload Meal Photo",
       stylesheet: "/public/css/upload.css",

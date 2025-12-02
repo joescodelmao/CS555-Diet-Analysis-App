@@ -8,6 +8,14 @@ import { parseFoodMessage } from "../helpers.js";
 const router = Router();
 const upload = multer({ dest: "uploads/" });
 
+router.use((req, res, next) => {
+  if (!req.session.user) {
+    return res.redirect("/login");
+  }
+  next();
+});
+
+
 router.route("/exercise").post(async (req, res) => {
   try {
     const { prompt } = req.body;
@@ -132,6 +140,9 @@ Here is the user's goal: ${userGoal}
       nutrition: parsedFood.nutrition,
       dietaryAnalysis: parsedFood.dietaryAnalysis,
       goalAnalysis: parsedFood.goalAnalysis,
+      user : req.session.user, 
+      stylesheet: "/public/css/foodrecognition.css",
+      imageURL: `data:image/png;base64,${base64Image}`
     });
   } catch (err) {
     console.error(err);
