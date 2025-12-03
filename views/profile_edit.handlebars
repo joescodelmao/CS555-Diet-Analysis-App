@@ -16,53 +16,80 @@
   <label>Goal:</label>
   <input type="text" name="goal" value="{{profile.goal}}" required><br>
 
-  <label><strong>Dietary Restrictions</strong></label>
-  
+  <label class="centerDR"><strong>Dietary Restrictions</strong></label>
+<div class="checkbox-pair">
 <label>Vegan:</label>
 <input type="checkbox" name="vegan" value="true" {{#if profile.dietaryRestrictions.vegan}}checked{{/if}}><br>
+</div>
 
+<div class="checkbox-pair">
 <label>Vegetarian:</label>
 <input type="checkbox" name="vegetarian" value="true" {{#if profile.dietaryRestrictions.vegetarian}}checked{{/if}}><br>
+</div>
 
+<div class="checkbox-pair">
 <label>Pescatarian:</label>
 <input type="checkbox" name="pescatarian" value="true" {{#if profile.dietaryRestrictions.pescatarian}}checked{{/if}}><br>
+</div>
 
+<div class="checkbox-pair">
 <label>Gluten-free:</label>
 <input type="checkbox" name="gluten_free" value="true" {{#if profile.dietaryRestrictions.gluten_free}}checked{{/if}}><br>
+</div>
 
+<div class="checkbox-pair">
 <label>Dairy-free:</label>
 <input type="checkbox" name="dairy_free" value="true" {{#if profile.dietaryRestrictions.dairy_free}}checked{{/if}}><br>
+</div>
 
+<div class="checkbox-pair">
 <label>Nut-free:</label>
 <input type="checkbox" name="nut_free" value="true" {{#if profile.dietaryRestrictions.nut_free}}checked{{/if}}><br>
+</div>
 
+<div class="checkbox-pair">
 <label>Peanut-free:</label>
 <input type="checkbox" name="peanut_free" value="true" {{#if profile.dietaryRestrictions.peanut_free}}checked{{/if}}><br>
+</div>
 
+<div class="checkbox-pair">
 <label>Soy-free:</label>
 <input type="checkbox" name="soy_free" value="true" {{#if profile.dietaryRestrictions.soy_free}}checked{{/if}}><br>
+</div>
 
+<div class="checkbox-pair">
 <label>Egg-free:</label>
 <input type="checkbox" name="egg_free" value="true" {{#if profile.dietaryRestrictions.egg_free}}checked{{/if}}><br>
+</div>
 
+<div class="checkbox-pair">
 <label>Shellfish-free:</label>
 <input type="checkbox" name="shellfish_free" value="true" {{#if profile.dietaryRestrictions.shellfish_free}}checked{{/if}}><br>
+</div>
 
+<div class="checkbox-pair">
 <label>Halal:</label>
 <input type="checkbox" name="halal" value="true" {{#if profile.dietaryRestrictions.halal}}checked{{/if}}><br>
+</div>
 
+<div class="checkbox-pair">
 <label>Kosher:</label>
 <input type="checkbox" name="kosher" value="true" {{#if profile.dietaryRestrictions.kosher}}checked{{/if}}><br>
-
+</div>
+<div class="checkbox-pair">
 <label>Low-carb</label>
 <input type="checkbox" name="low_carb" value="true" {{#if profile.dietaryRestrictions.low_carb}}checked{{/if}}><br>
+</div>
 
+<div class="checkbox-pair">
 <label>Low-sodium:</label>
 <input type="checkbox" name="low_sodium" value="true" {{#if profile.dietaryRestrictions.low_sodium}}checked{{/if}}><br>
+</div>
 
+<div class="checkbox-pair">
 <label>Low-sugar</label>
 <input type="checkbox" name="low_sugar" value="true" {{#if profile.dietaryRestrictions.low_sugar}}checked{{/if}}><br>
-
+</div>
 
   <button type="submit">Save Profile</button>
 </form>

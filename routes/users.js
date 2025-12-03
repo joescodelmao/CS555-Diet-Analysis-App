@@ -52,11 +52,13 @@ router.get("/", async (req, res) => {
                 }
             }
         }
+    
         res.render("users", {
             users,
             stylesheet: "/public/css/users.css",
             title: "Userlist",
             user,
+            profile: true
         });
     } catch (e) {
         res.status(500).json(e);
