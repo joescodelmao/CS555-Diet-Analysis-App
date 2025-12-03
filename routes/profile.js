@@ -127,7 +127,7 @@ router.get("/:id", async (req, res) => {
       user,
       social,
       noRestrictions: profile && profile.dietaryRestrictions ? checkForNoRestrictions(profile.dietaryRestrictions) : true,
-      profile: true,
+      profile,
       UserProfile:false
     });
   } catch (error) {

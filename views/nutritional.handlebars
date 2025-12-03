@@ -1,3 +1,4 @@
+{{#if foodLog.length}}
 {{#each foodLog}}
   <div class="food-entry">
     <strong><p>Date: {{this.date}}</p></strong>
@@ -8,3 +9,6 @@
   </div>
   <br/>
 {{/each}}
+{{else}}
+  <h2> No foods logged yet! </h2>
+{{/if}}
