@@ -41,6 +41,7 @@ router
       title: "Add Food",
       stylesheet: "/public/css/upload.css",
       user: req.session.user,
+      profile: true
     });
   })
   .post(upload.single("foodImage"), async (req, res) => {
@@ -104,7 +105,8 @@ router
     res.render("upload", {
       title: "Upload Meal Photo",
       stylesheet: "/public/css/upload.css",
-      user: req.session.user
+      user: req.session.user,
+      profile: true
     });
   })
   .post(upload.single("mealImage"), async (req, res) => {
@@ -118,6 +120,7 @@ router
         title: "Upload Success",
         imagePath: `/uploads/${filename}`,
         message: "Meal photo captured successfully!",
+        profile: true
       });
     }
 
@@ -126,6 +129,7 @@ router
       return res.status(400).render("upload", {
         title: "Upload Meal Photo",
         error_message: "Please upload or capture an image.",
+        profile: true
       });
     }
 

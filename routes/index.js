@@ -29,7 +29,8 @@ const constructorMethod = (app) => {
     }
     return res.render("exercise", {
       user: req.session.user,
-      stylesheet: "/public/css/exercise.css"
+      stylesheet: "/public/css/exercise.css",
+      profile: true
     });
   });
 
