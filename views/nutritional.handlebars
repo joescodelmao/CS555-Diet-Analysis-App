@@ -1,7 +1,8 @@
 {{#each foodLog}}
   <div class="food-entry">
-    <p><strong>Food:</strong> {{this.food}}</p>
-    <p><strong>Time:</strong> {{this.timestamp}}</p>
-    <pre>{{this.gptResponse}}</pre>
+    <p>{{this.food}}</p>
+    <p>{{this.ingredients}}</p>
+    <p>{{this.nutrition}}</p>
   </div>
+  <br/>
 {{/each}}

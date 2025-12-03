@@ -164,7 +164,8 @@ Here is the user's goal: ${userGoal}
       user : req.session.user, 
       stylesheet: "/public/css/foodrecognition.css",
       imageURL: `data:image/png;base64,${base64Image}`,
-      profile: true
+      profile: true,
+      script: "/public/js/addFood.js"
     });
   } catch (err) {
     console.error(err);

@@ -3,12 +3,12 @@
 <img src={{imageURL}} style="max-width: 200px; margin-top: 10px; display: block; margin-left: auto; margin-right: auto;" alt="User entered food" />
 
 <p><strong>Identified Food:</strong></p>
-<p>Food: {{food}}</p>
-<p>Ingredients: {{ingredients}}</p>
-<p>Nutrition: {{nutrition}}</p>
-<p>Analysis Based on Dietary Restrictions: {{dietaryAnalysis}}</p>
-<p>Analysis Based on Goal: {{goalAnalysis}}</p>
+<p id = "foodInfo">Food: {{food}}</p>
+<p id="ingredientsInfo">Ingredients: {{ingredients}}</p>
+<p id="nutritionInfo">Nutrition: {{nutrition}}</p>
+<p id="dietaryAnalysisInfo">Analysis Based on Dietary Restrictions: {{dietaryAnalysis}}</p>
+<p id="goalAnalysisInfo">Analysis Based on Goal: {{goalAnalysis}}</p>
 
-<a href="/upload/meal" class="button-link">Try again</a>
+<a class="button-link" id="addButton">Add to Food Logs</a>
 <br/>
-<a href="/nutritional" class="button-link">Go to dashboard</a>
+<a href="/upload/meal" class="button-link">Try again</a>
