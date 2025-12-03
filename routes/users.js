@@ -4,10 +4,19 @@ import { ObjectId } from "mongodb";
 import { getProfileByUserId } from "../data/profiles.js";
 import { checkId } from "../helpers.js";
 const router = express.Router();
-router.use((req, res, next) => {
+router.use(async (req, res, next) => {
     if (!req.session.user) {
-      return res.redirect("/login");
-    }
+        return res.redirect("/login");
+      } else {
+        try{
+          const profile = await getProfileByUserId(req.session.user._id);
+          if (profile === null){
+            return res.redirect("/home");
+          }
+        } catch (e){
+          return res.redirect("/home");
+        }
+      }
     next();
 });
 

@@ -3,25 +3,20 @@ import multer from "multer";
 import path from "path";
 import fs from "fs";
 
-//image classification stuff
-// import * as tf from '@tensorflow/tfjs';
-// import * as mobilenet from '@tensorflow-models/mobilenet';
-// import { createCanvas, loadImage } from "canvas";
-
 const router = Router();
 
-//mobilenet model
-let model;
-
-// (async () => {
-//   model = await mobilenet.load();
-//   console.log("mobilenet model loaded.");
-// })();
-
-
-router.use((req, res, next) => {
+router.use(async (req, res, next) => {
   if (!req.session.user) {
     return res.redirect("/login");
+  } else {
+    try{
+      const profile = await getProfileByUserId(req.session.user._id);
+      if (profile === null){
+        return res.redirect("/home");
+      }
+    } catch (e){
+      return res.redirect("/home");
+    }
   }
   next();
 });

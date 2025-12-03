@@ -6,15 +6,19 @@
     <link rel="stylesheet" href="{{stylesheet}}">
 </head>
 <body>
-    <!-- Global Navbar -->
     <nav>
         <a href="/">Home</a>
         {{#if user}}
+        {{#if profile}}
             | <a href="/profile">My Profile</a>
             | <a href="/nutritional">Nutritional Dashboard</a>
             | <a href="/upload/meal">Add Food</a>
             | <a href="/exercise">Exercise Advice</a>
             | <a href="/logout">Logout</a>
+        {{else}}
+            | <a href="/profile">Create Your Profile</a>
+            | <a href="/logout">Logout</a>
+        {{/if}}
         {{else}}
         {{#if registerpage}}
             <a href="/login">Login</a>

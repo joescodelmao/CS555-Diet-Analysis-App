@@ -2,26 +2,52 @@
   <h1>Diet Analysis App</h1>
 </header>
 <main>
-  {{#if user}}
-  <p>
-    Welcome to the Diet Analysis App!
-  <br>
-  <br>
-    Start by customizing your profile in the <a href="/profile">my profile</a> tab. These details can be changed anytime!
-  <br>
-  <br>
-    Once you have created your profile, you will be granted access to the social page, where 
-    you can find your friends or make new ones that have similar goals to you!
-  <br>
-  <br>
-    Upload meals for free at any time and see the nutritional breakdown of your plate.
-    We'll let you know if your meal aligns with your goals
-  <br>
-  <br>
-    View your meal history, but first, <a href="/upload/meal">upload a meal!</a>
-  </p>
-  {{else}}
-  <a href="/register">Register</a>
-  <a href="/login">Login</a>
-  {{/if}}
+  <div class="info-box">
+    {{#if user}}
+    {{#if profile}}
+    <p>
+      Welcome to the Diet Analysis App!
+      <br><br>
+      Start by customizing your profile in the <a href="/profile">my profile</a> tab. These details can be changed anytime!
+      <br><br>
+      Once you have created your profile, you will be granted access to the social page, where 
+      you can find your friends or make new ones that have similar goals to you!
+      <br><br>
+      Upload meals for free at any time and see the nutritional breakdown of your plate.
+      We'll let you know if your meal aligns with your goals
+      <br><br>
+      View your meal history, but first, <a href="/upload/meal">upload a meal!</a>
+    </p>
+    {{else}}
+    <p>
+      Welcome to the Diet Analysis App!
+      <br><br>
+      Start by customizing your profile in the <a href="/profile">my profile</a> tab. These details can be changed anytime!
+      <br><br>
+      Once you have created your profile, you will be granted access to our other features,
+      including the social page, nutritional breakdown, image upload, and exercise recommendations!
+      <br><br>
+      Upload meals for free at any time and see the nutritional breakdown of your plate.
+      We'll let you know if your meal aligns with your goals
+      </p>
+      {{/if}}
+    {{else}}
+    <p>
+      Welcome to the Diet Analysis App!
+      <br><br>
+      Customize your profile to fit your dietary needs!
+      <br><br>
+      Connect with friends across the world!
+      <br><br>
+      Upload meals for free at any time and see the nutritional breakdown of your plate.
+      We'll let you know if your meal aligns with your goals
+      <br><br>
+      View your uploaded meal history
+    </p>
+
+    <a href="/register" class="btn">Register</a>
+    <a href="/login" class="btn">Login</a>
+    {{/if}}
+    
+  </div>
 </main>
