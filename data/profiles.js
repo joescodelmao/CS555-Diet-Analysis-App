@@ -21,9 +21,17 @@ export const createOrUpdateProfile = async (userId, data) => {
     height: parseFloat(data.height) || null,
     weight: parseFloat(data.weight) || null,
     goal: checkString(data.goal || "", "Goal"),
-    dietaryRestrictions: data.dietaryRestrictions
+    dietaryRestrictions: data.dietaryRestrictions,
+    foodlog : []
   };
 
+  if (existing && !existing.foodLog) {
+    await profileCollection.updateOne(
+      { userId: new ObjectId(userId) },
+      { $set: { foodLog: [] } }
+    );
+  }
+  
   if (existing) {
     await profileCollection.updateOne(
       { userId: new ObjectId(userId) },

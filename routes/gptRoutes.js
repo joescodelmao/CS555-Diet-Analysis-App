@@ -4,8 +4,9 @@ import { checkString } from "../helpers.js";
 import { getProfileByUserId } from "../data/profiles.js";
 import multer from "multer";
 import fs from "fs";
-import { getProfileByUserId } from "../data/profiles.js";
 import { parseFoodMessage } from "../helpers.js";
+import { profiles } from "../config/mongoCollections.js";
+import { ObjectId } from "mongodb";
 
 const router = Router();
 const upload = multer({ dest: "uploads/" });
@@ -35,7 +36,8 @@ export const buildNewProfile = (data) => {
 router.route("/exercise").post(async (req, res) => {
   try {
     const { prompt } = req.body;
-
+    const userProfile = await getProfileByUserId(req.session.user._id);
+    const stringified = JSON.stringify(userProfile);
     const response = await client.chat.completions.create({
       model: "gpt-4.1-mini",
       messages: [
@@ -162,7 +164,6 @@ Here is the user's goal: ${userGoal}
       user : req.session.user, 
       stylesheet: "/public/css/foodrecognition.css",
       imageURL: `data:image/png;base64,${base64Image}`,
-      profile: true
     });
   } catch (err) {
     console.error(err);

@@ -1,3 +1,7 @@
-<div class="nutritional-dashboard">
-  <h1>Nutritional Dashboard</h1>
-</div>
+{{#each foodLog}}
+  <div class="food-entry">
+    <p><strong>Food:</strong> {{this.food}}</p>
+    <p><strong>Time:</strong> {{this.timestamp}}</p>
+    <pre>{{this.gptResponse}}</pre>
+  </div>
+{{/each}}

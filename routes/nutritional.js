@@ -9,11 +9,12 @@ router.use(async (req, res, next) => {
 });
 
 router.route("/").get(async (req, res) => {
+    const profile = await getProfileByUserId(req.session.user._id);
+
     res.render("nutritional", {
       title: "Nutritional Page",
       stylesheet: "/public/css/nutritional.css",
       user: req.session.user,
-      profile: true
     });
 });
 
