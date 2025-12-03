@@ -35,7 +35,8 @@ nav a.active {
 }
   
 .button-link:hover {
-    background-color: green
+    background-color: lightgreen;
+    cursor: pointer;
 }
 
 hr {
