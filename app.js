@@ -19,6 +19,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/public", express.static("public"));
 app.engine("handlebars", exphbs.engine({ defaultLayout: "main", helpers: {
       multiply: (a, b) => (a * b).toFixed(2),
+      gt: (a, b) => a > b,
     },}));
 app.set("view engine", "handlebars");
 

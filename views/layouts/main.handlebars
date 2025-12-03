@@ -2,7 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{title}}</title>
+    <link rel="stylesheet" href="/public/css/global.css">
     <link rel="stylesheet" href="{{stylesheet}}">
 </head>
 <body>
@@ -10,14 +12,14 @@
         <a href="/">Home</a>
         {{#if user}}
         {{#if profile}}
-            | <a href="/profile">My Profile</a>
-            | <a href="/nutritional">Nutritional Dashboard</a>
-            | <a href="/upload/meal">Add Food</a>
-            | <a href="/exercise">Exercise Advice</a>
-            | <a href="/logout">Logout</a>
+            <a href="/profile">My Profile</a>
+            <a href="/nutritional">Nutritional Dashboard</a>
+            <a href="/upload/meal">Add Food</a>
+            <a href="/exercise">Exercise Advice</a>
+            <a href="/logout">Logout</a>
         {{else}}
-            | <a href="/profile">Create Your Profile</a>
-            | <a href="/logout">Logout</a>
+            <a href="/profile">Create Your Profile</a>
+            <a href="/logout">Logout</a>
         {{/if}}
         {{else}}
         {{#if registerpage}}
@@ -27,9 +29,10 @@
         {{/if}}
         {{/if}}
     </nav>
-    <hr>
 
-    {{{body}}}
+    <main class="main-content">
+        {{{body}}}
+    </main>
 
     {{#if script}}
     <script src="{{script}}"></script>

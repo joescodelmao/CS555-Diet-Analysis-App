@@ -1,10 +1,173 @@
-{{#each foodLog}}
-  <div class="food-entry">
-    <strong><p>Date: {{this.date}}</p></strong>
-    <p>{{this.food}}</p>
-    <p>{{this.ingredients}}</p>
-    <p>{{this.nutrition}}</p>
-    <hr />
+<div class="nutritional-dashboard-container">
+  <!-- Hero Section with Image -->
+  <div class="dashboard-hero">
+    <div class="hero-content">
+      <div class="hero-text">
+        <h1 class="dashboard-title">
+          <span class="icon">📊</span>
+          Nutritional Dashboard
+        </h1>
+        <p class="hero-subtitle">Track your daily nutrition and achieve your health goals</p>
+      </div>
+      <div class="hero-image">
+        <div class="nutrition-icon">🥗</div>
+      </div>
+    </div>
   </div>
-  <br/>
-{{/each}}
+
+  <!-- Stats Cards -->
+  <div class="stats-grid">
+    <div class="stat-card calories">
+      <div class="stat-icon">🔥</div>
+      <div class="stat-info">
+        <h3>Calories</h3>
+        <p class="stat-value">Track Daily</p>
+      </div>
+    </div>
+    <div class="stat-card protein">
+      <div class="stat-icon">💪</div>
+      <div class="stat-info">
+        <h3>Protein</h3>
+        <p class="stat-value">Build Muscle</p>
+      </div>
+    </div>
+    <div class="stat-card vitamins">
+      <div class="stat-icon">🥬</div>
+      <div class="stat-info">
+        <h3>Vitamins</h3>
+        <p class="stat-value">Stay Healthy</p>
+      </div>
+    </div>
+    <div class="stat-card hydration">
+      <div class="stat-icon">💧</div>
+      <div class="stat-info">
+        <h3>Hydration</h3>
+        <p class="stat-value">Stay Hydrated</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Food Log Section -->
+  <div class="food-log-section">
+    <div class="section-header">
+      <h2 class="section-title">
+        <span class="section-icon">📝</span>
+        Your Food Log
+      </h2>
+      <div class="date-selector">
+        <input type="date" id="datePicker" class="date-input" />
+        <button id="todayBtn" class="btn-today">Today</button>
+      </div>
+    </div>
+
+    {{#if foodLog}}
+      {{#if foodLog.length}}
+        <div class="food-entries">
+          {{#each foodLog}}
+            <div class="food-entry-card">
+              <div class="food-entry-header">
+                <div class="food-date">
+                  <span class="date-icon">📅</span>
+                  <strong>{{this.date}}</strong>
+                </div>
+                <div class="food-badge">Logged</div>
+              </div>
+              
+              <div class="food-content">
+                <div class="food-main">
+                  <div class="food-icon">🍽️</div>
+                  <div class="food-details">
+                    <h3 class="food-name">{{this.food}}</h3>
+                    {{#if this.ingredients}}
+                      <div class="food-ingredients">
+                        <span class="ingredients-label">Ingredients:</span>
+                        <span class="ingredients-text">{{this.ingredients}}</span>
+                      </div>
+                    {{/if}}
+                  </div>
+                </div>
+                
+                {{#if this.nutrition}}
+                  <div class="nutrition-info">
+                    <div class="nutrition-icon">📊</div>
+                    <div class="nutrition-details">
+                      <p class="nutrition-text">{{this.nutrition}}</p>
+                    </div>
+                  </div>
+                {{/if}}
+              </div>
+              
+              <div class="food-entry-footer">
+                <div class="entry-divider"></div>
+              </div>
+            </div>
+          {{/each}}
+        </div>
+      {{else}}
+        <div class="empty-state">
+          <div class="empty-icon">🍎</div>
+          <h2>No Food Logs Yet</h2>
+          <p>Start tracking your nutrition by adding your first meal!</p>
+          <a href="/upload/meal" class="btn-primary">Add Your First Meal</a>
+        </div>
+      {{/if}}
+    {{else}}
+      <div class="empty-state">
+        <div class="empty-icon">🍎</div>
+        <h2>No Food Logs Yet</h2>
+        <p>Start tracking your nutrition by adding your first meal!</p>
+        <a href="/upload/meal" class="btn-primary">Add Your First Meal</a>
+      </div>
+    {{/if}}
+  </div>
+
+  <!-- Quick Actions -->
+  <div class="quick-actions">
+    <h2 class="section-title">
+      <span class="section-icon">⚡</span>
+      Quick Actions
+    </h2>
+    <div class="actions-grid">
+      <a href="/upload/meal" class="action-card">
+        <div class="action-icon">📸</div>
+        <h3>Add Meal Photo</h3>
+        <p>Upload a photo of your meal</p>
+      </a>
+      <a href="/nutritional" class="action-card">
+        <div class="action-icon">📊</div>
+        <h3>View Analytics</h3>
+        <p>See your nutrition trends</p>
+      </a>
+      <a href="/profile" class="action-card">
+        <div class="action-icon">👤</div>
+        <h3>Update Profile</h3>
+        <p>Manage your preferences</p>
+      </a>
+      <a href="/exercise" class="action-card">
+        <div class="action-icon">🏃</div>
+        <h3>Exercise Tips</h3>
+        <p>Get fitness advice</p>
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Date picker functionality
+  document.addEventListener('DOMContentLoaded', function() {
+    const datePicker = document.getElementById('datePicker');
+    const todayBtn = document.getElementById('todayBtn');
+    
+    if (datePicker) {
+      datePicker.value = new Date().toISOString().split('T')[0];
+    }
+    
+    if (todayBtn) {
+      todayBtn.addEventListener('click', function() {
+        if (datePicker) {
+          datePicker.value = new Date().toISOString().split('T')[0];
+        }
+      });
+    }
+  });
+</script>

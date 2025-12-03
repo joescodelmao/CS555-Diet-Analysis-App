@@ -10,15 +10,27 @@ router.use(async (req, res, next) => {
 });
 
 router.route("/").get(async (req, res) => {
-  const user = await getUserById(req.session.user._id);
+  try {
+    const user = await getUserById(req.session.user._id);
+    const foodLog = user.foodLog && Array.isArray(user.foodLog) ? [...user.foodLog].reverse() : [];
 
-  res.render("nutritional", {
-    title: "Nutritional Page",
-    stylesheet: "/public/css/nutritional.css",
-    user: req.session.user,
-    profile: true,
-    foodLog: user.foodLog.reverse(),
-  });
+    res.render("nutritional", {
+      title: "Nutritional Dashboard",
+      stylesheet: "/public/css/nutritional.css",
+      user: req.session.user,
+      profile: true,
+      foodLog: foodLog,
+    });
+  } catch (error) {
+    console.error("Error loading nutritional dashboard:", error);
+    res.render("nutritional", {
+      title: "Nutritional Dashboard",
+      stylesheet: "/public/css/nutritional.css",
+      user: req.session.user,
+      profile: true,
+      foodLog: [],
+    });
+  }
 });
 
 router.route("/").post(async (req, res) => {
