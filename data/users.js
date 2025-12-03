@@ -212,6 +212,23 @@ export const addFoodItemToUser = async (userId, foodData) => {
     }
     const userCollection = await users();
 
+      const date = new Date();
+      let year = date.getFullYear().toString();
+      let month = (date.getMonth() + 1).toString();
+      let day = date.getDate().toString();
+
+      if (month.length === 1) {
+        month = "0" + month;
+      }
+
+      if (day.length === 1) {
+        day = "0" + day;
+      }
+
+      const formattedDate = month + "/" + day + "/" + year;
+
+      foodData.date = formattedDate;
+
 
     const updateInfo = await userCollection.findOneAndUpdate(
         { _id: new ObjectId(userId) },
