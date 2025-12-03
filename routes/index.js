@@ -46,19 +46,8 @@ const constructorMethod = (app) => {
     });
   });
 
-  app.use(async (req, res) => {
-    if (!req.session.user) {
-      return res.redirect("/home");
-    } else {
-      try{
-        const profile = await getProfileByUserId(req.session.user._id);
-        if (profile === null){
-          return res.redirect("/home");
-        }
-      } catch (e){
-        return res.redirect("/home");
-      }
-    }
+  app.use((req, res) => {
+    res.status(404).json({ error: "Route Not found" });
   });
 };
 
