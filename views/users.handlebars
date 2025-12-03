@@ -4,7 +4,7 @@
     {{#if users.length}}
         <ul>
             {{#each users}}
-                <li>{{this.username}} - {{this.profile.goal}}
+                <li><a href="/profile/{{this._id}}" class="profileLink">{{this.username}}</a> {{this.profile.goal}}
                     <form action="/users/{{this.follow_or_unfollow}}/{{this._id}}" method="POST">
                     <button type="submit">{{this.follow_or_unfollow}}</button>
                     </form>

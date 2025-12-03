@@ -1,4 +1,4 @@
-<h1>Your Profile</h1>
+<h1>{{title}}</h1>
 {{#if profile}}
   <p><strong>Name:</strong> {{profile.name}}</p>
   <p><strong>Age:</strong> {{profile.age}}</p>
@@ -67,9 +67,16 @@
   {{#if profile.dietaryRestrictions.low_sugar}}
     <p><strong>Low-sugar</strong></p>
   {{/if}}
+
+  {{#if UserProfile}}
   <a href="/profile/edit">Edit Profile</a>
+  {{/if}}
 {{else}}
+  {{#if UserProfile}}
   <p>No profile yet. <a href="/profile/edit">Create one</a></p>
+  {{else}}
+  <p>No profile yet. </p>
+  {{/if}}
 {{/if}}
 
 {{#if social}}

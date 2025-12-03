@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { getProfileByUserId, createOrUpdateProfile } from "../data/profiles.js";
-import { checkForNoRestrictions } from "../helpers.js";
+import { checkForNoRestrictions, checkId } from "../helpers.js";
 import { getUserById } from "../data/users.js";
 
 const router = Router();
@@ -28,7 +28,8 @@ router.get("/", async (req, res) => {
       stylesheet: "/public/css/profile.css",
       user,
       social,
-      noRestrictions: profile && profile.dietaryRestrictions ? checkForNoRestrictions(profile.dietaryRestrictions) : true
+      noRestrictions: profile && profile.dietaryRestrictions ? checkForNoRestrictions(profile.dietaryRestrictions) : true,
+      UserProfile:true
     });
   } catch (error) {
     res.render("profile", {
@@ -38,7 +39,8 @@ router.get("/", async (req, res) => {
       user: req.session.user,
       noRestrictions: true,
       error: "Profile not found. Please create your profile.",
-      social: false
+      social: false,
+      UserProfile:true
     });
   }
 });
@@ -107,6 +109,40 @@ router.post("/edit", async (req, res) => {
     noRestrictions,
   });
   res.redirect("/profile");
+});
+
+router.get("/:id", async (req, res) => {
+  try {
+    const id = checkId(req.params.id)
+    const profile = await getProfileByUserId(req.params.id);
+    const user = await getUserById(req.params.id)
+    let social = true;
+    if (profile === null){
+      social = false
+    }
+    res.render("profile", {
+      profile,
+      title: `${user.username}'s Profile`,
+      stylesheet: "/public/css/profile.css",
+      user,
+      social,
+      noRestrictions: profile && profile.dietaryRestrictions ? checkForNoRestrictions(profile.dietaryRestrictions) : true,
+      profile: true,
+      UserProfile:false
+    });
+  } catch (error) {
+    res.render("profile", {
+      profile: null,
+      title: `ERROR ${error}`,
+      stylesheet: "/public/css/profile.css",
+      user: req.session.user,
+      noRestrictions: true,
+      error: "Profile not found. Please create your profile.",
+      social: false,
+      profile: true,
+      UserProfile:false
+    });
+  }
 });
 
 export default router;
