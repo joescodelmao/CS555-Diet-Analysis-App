@@ -23,6 +23,7 @@ export const register = async (username, password) => {
     password: hashedPassword,
     following: [],
     followers: [],
+    foodLog: [],
     _id: new ObjectId()
   };
 
@@ -195,5 +196,35 @@ export const getAllUsers = async () => {
         return userList
 
 }
+
+/**
+ * Adds a new food item entry to a user's foodLog array.
+ * @param {string} userId - The ID of the user (as a string).
+ * @param {object} foodData - The food analysis and image data to log.
+ * @returns {object} The updated user object.
+ */
+export const addFoodItemToUser = async (userId, foodData) => {
+
+    userId = checkId(userId);
+
+    if (!foodData || typeof foodData !== 'object') {
+        throw new Error('Food data must be a valid object.');
+    }
+    const userCollection = await users();
+
+
+    const updateInfo = await userCollection.findOneAndUpdate(
+        { _id: new ObjectId(userId) },
+        { $push: { foodLog: foodData } }, 
+        { returnDocument: 'after' }
+    );
+
+    if (!updateInfo) {
+        throw `Could not add food item to user with ID: ${userId}`;
+    }
+
+    updateInfo._id = updateInfo._id.toString();
+    return updateInfo;
+};
 
 //console.log(await getUserById("692a4b946944e90c8b26beca"))

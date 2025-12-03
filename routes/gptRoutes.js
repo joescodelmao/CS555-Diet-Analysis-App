@@ -1,5 +1,7 @@
 import { Router } from "express";
 import { client } from "../openai.js";
+import { checkString } from "../helpers.js";
+import { getProfileByUserId } from "../data/profiles.js";
 import multer from "multer";
 import fs from "fs";
 import { getProfileByUserId } from "../data/profiles.js";
@@ -14,6 +16,19 @@ router.use(async (req, res, next) => {
   } 
   next();
 });
+
+
+
+export const buildNewProfile = (data) => {
+  return {
+    name: checkString(data.name || "", "Name"),
+    age: parseInt(data.age) || null,
+    height: parseFloat(data.height) || null,
+    weight: parseFloat(data.weight) || null,
+    goal: checkString(data.goal || "", "Goal"),
+    dietaryRestrictions: data.dietaryRestrictions
+  };
+};
 
 
 
@@ -32,13 +47,16 @@ Your job is to give clear, practical, and safe advice related to exercise goals.
 The user will type their fitness or exercise goal (like "build muscle", 
 "lose fat", "increase endurance", "tone arms", etc).
 Return a straightforward plan or guidance in plain language.
-Avoid fluff. Give immediately useful steps.
+Avoid fluff. Give immediately useful steps. Consider the following user profile features as well.
           `.trim(),
         },
-        {
-          role: "user",
-          content: prompt,
-        },
+          {
+            role: "user",
+            content: `
+      User Goal: ${prompt}
+      User Profile: ${stringified}
+            `.trim(),
+          },
       ],
     });
 
@@ -151,5 +169,7 @@ Here is the user's goal: ${userGoal}
     return res.status(500).send("Error analyzing image");
   }
 });
+
+export { client };
 
 export default router;
