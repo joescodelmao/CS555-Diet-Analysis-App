@@ -15,6 +15,7 @@ router.route("/").get(async (req, res) => {
       title: "Nutritional Page",
       stylesheet: "/public/css/nutritional.css",
       user: req.session.user,
+      profile: true
     });
 });
 
