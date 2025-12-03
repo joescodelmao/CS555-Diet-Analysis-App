@@ -17,7 +17,7 @@ router.route("/").get(async (req, res) => {
     stylesheet: "/public/css/nutritional.css",
     user: req.session.user,
     profile: true,
-    foodLog: user.foodLog,
+    foodLog: user.foodLog.reverse(),
   });
 });
 
